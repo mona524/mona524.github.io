@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,next" />
+  <meta name="keywords" content="web.py," />
 
 
 
@@ -35,17 +35,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="title: python虚拟环境的搭建date: 2017-11-20 12:44:08tags: [‘web.py’,]categories: python 一、简单URL规则： import web urls = (     &amp;apos;/index&amp;apos;,&amp;apos;Index&a">
+<meta name="description" content="一、简单URL规则： import web urls = (     &amp;apos;/index&amp;apos;,&amp;apos;Index&amp;apos;,     &amp;apos;/hello/\d+&amp;apos;, &amp;apos;Hello&amp;apos;,     &amp">
+<meta name="keywords" content="web.py">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mona">
+<meta property="og:title" content="web.py url路由配置和分发">
 <meta property="og:url" content="http://yoursite.com/2018/04/28/web.py url路由配置和分发/index.html">
 <meta property="og:site_name" content="Mona">
-<meta property="og:description" content="title: python虚拟环境的搭建date: 2017-11-20 12:44:08tags: [‘web.py’,]categories: python 一、简单URL规则： import web urls = (     &amp;apos;/index&amp;apos;,&amp;apos;Index&amp;apos;,     &amp;apos;/hello/\d+&amp;apos;, &amp;apos;Hello&amp;apos;">
+<meta property="og:description" content="一、简单URL规则： import web urls = (     &amp;apos;/index&amp;apos;,&amp;apos;Index&amp;apos;,     &amp;apos;/hello/\d+&amp;apos;, &amp;apos;Hello&amp;apos;,     &amp;apos;/hey/(.*)&amp;apos;,&amp;apos;Hey&amp;apos;, ) class Index:     def GET(self):">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-28T09:44:54.000Z">
+<meta property="og:updated_time" content="2018-04-28T09:46:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mona">
-<meta name="twitter:description" content="title: python虚拟环境的搭建date: 2017-11-20 12:44:08tags: [‘web.py’,]categories: python 一、简单URL规则： import web urls = (     &amp;apos;/index&amp;apos;,&amp;apos;Index&amp;apos;,     &amp;apos;/hello/\d+&amp;apos;, &amp;apos;Hello&amp;apos;">
+<meta name="twitter:title" content="web.py url路由配置和分发">
+<meta name="twitter:description" content="一、简单URL规则： import web urls = (     &amp;apos;/index&amp;apos;,&amp;apos;Index&amp;apos;,     &amp;apos;/hello/\d+&amp;apos;, &amp;apos;Hello&amp;apos;,     &amp;apos;/hey/(.*)&amp;apos;,&amp;apos;Hey&amp;apos;, ) class Index:     def GET(self):">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -55,7 +56,7 @@
   };
 </script>
 
-  <title>  | Mona </title>
+  <title> web.py url路由配置和分发 | Mona </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -172,7 +173,7 @@
           
           
             
-              
+              web.py url路由配置和分发
             
           
         </h1>
@@ -181,11 +182,26 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2018-04-28T17:44:54+08:00" content="2018-04-28">
+          <time itemprop="dateCreated" datetime="2018-04-28T17:46:34+08:00" content="2018-04-28">
             2018-04-28
           </time>
         </span>
 
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Python/" itemprop="url" rel="index">
+                  <span itemprop="name">python</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
         
 
         
@@ -200,9 +216,7 @@
       
 
       
-        <span itemprop="articleBody"><hr>
-<p>title: python虚拟环境的搭建<br>date: 2017-11-20 12:44:08<br>tags: [‘web.py’,]<br>categories: python</p>
-<p>一、简单URL规则：</p>
+        <span itemprop="articleBody"><p>一、简单URL规则：</p>
 <pre><code>import web
 urls = (
     &apos;/index&apos;,&apos;Index&apos;,
@@ -275,12 +289,18 @@ def GET(self,args,name):
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/web-py/" rel="tag">#web.py</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/28/python虚拟环境的搭建/" rel="prev">web.py url路由配置和分发</a>
+              <a href="/2018/04/28/python虚拟环境的搭建/" rel="prev">python虚拟环境的搭建</a>
             
           </div>
 
@@ -441,7 +461,7 @@ def GET(self,args,name):
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
