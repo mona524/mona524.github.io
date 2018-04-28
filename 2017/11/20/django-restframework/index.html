@@ -1,0 +1,1113 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="django," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="RESTful 介绍REST与技术无关，代表的是一种软件架构风格，REST是Representational State Transfer的简称，中文翻译为“表征状态转移”REST从资源的角度类审视整个网络，它将分布在网络中某个节点的资源通过URL进行标识，客户端应用通过URL来获取资源的表征，获得这些表征致使这些应用">
+<meta name="keywords" content="django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django---restframework">
+<meta property="og:url" content="http://yoursite.com/2017/11/20/django-restframework/index.html">
+<meta property="og:site_name" content="Mona">
+<meta property="og:description" content="RESTful 介绍REST与技术无关，代表的是一种软件架构风格，REST是Representational State Transfer的简称，中文翻译为“表征状态转移”REST从资源的角度类审视整个网络，它将分布在网络中某个节点的资源通过URL进行标识，客户端应用通过URL来获取资源的表征，获得这些表征致使这些应用转变状态所有的数据，不过是通过网络获取的还是操作（增删改查）的数据，都是资源，将">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-22T11:27:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="django---restframework">
+<meta name="twitter:description" content="RESTful 介绍REST与技术无关，代表的是一种软件架构风格，REST是Representational State Transfer的简称，中文翻译为“表征状态转移”REST从资源的角度类审视整个网络，它将分布在网络中某个节点的资源通过URL进行标识，客户端应用通过URL来获取资源的表征，获得这些表征致使这些应用转变状态所有的数据，不过是通过网络获取的还是操作（增删改查）的数据，都是资源，将">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> django---restframework | Mona </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title"></span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              django---restframework
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2017-11-20T13:03:33+08:00" content="2017-11-20">
+            2017-11-20
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Python/" itemprop="url" rel="index">
+                  <span itemprop="name">python</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2>RESTful 介绍</h2><br><ul><li>REST与技术无关，代表的是一种软件架构风格，REST是Representational State Transfer的简称，中文翻译为“表征状态转移”</li><br><li>REST从资源的角度类审视整个网络，它将分布在网络中某个节点的资源通过URL进行标识，客户端应用通过URL来获取资源的表征，获得这些表征致使这些应用转变状态</li><br><li>所有的数据，不过是通过网络获取的还是操作（增删改查）的数据，都是资源，将一切数据视为资源是REST区别与其他架构风格的最本质属性</li><br><li>对于REST这种面向资源的架构风格，有人提出一种全新的结构理念，即：面向资源架构（ROA：Resource Oriented Architecture）</li></ul><br><h2>restframework 安装</h2>
+
+<pre><code>pip3 install djangorestframework
+</code></pre><p></p><h2>RESTful API设计简介</h2><p></p>
+<p><ul></ul></p>
+<li>API 与用户通信协议，总是使用HTTPs协议。</li><br><li>域名</li>
+
+<pre><code>https://api.example.com    尽量将API部署在专用域名（会存在跨域问题）                     
+https://example.org/api/  
+</code></pre><li>版本</li>
+
+<pre><code>版本信息放在URL中，如：https://api.example.com/v1/ 或https://api.example.com?version=v1
+版本信息放在请求头里；      跨域时，引发发送多次请求
+</code></pre><li>路径，视网络上任何东西都是资源，均使用名词表示（可复数）</li>
+
+<pre><code> https://api.example.com/v1/zoos
+https://api.example.com/v1/animals
+https://api.example.com/v1/employees
+</code></pre><li>请求方式method</li>
+
+<pre><code>GET：从服务器取出资源（一项或多项）
+POST：在服务器新建一个资源
+PUT：在服务器更新资源（客户端提供改变后的完整资源）
+PATCH：在服务器更新资源（客户端提供改变的属性）
+DELETE：从服务器删除资源
+</code></pre><li>过滤，通过在url上传参的形式传递搜索条件</li>
+
+<pre><code>https://api.example.com/v1/zoos?limit=10：指定返回记录的数量
+https://api.example.com/v1/zoos?offset=10：指定返回记录的开始位置
+https://api.example.com/v1/zoos?page=2&amp;per_page=100：指定第几页，以及每页的记录数
+https://api.example.com/v1/zoos?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序
+https://api.example.com/v1/zoos?animal_type_id=1：指定筛选条件
+</code></pre><li>状态码：</li><br><span><br>200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。 &gt;<br>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。<br>202 Accepted - [<em>]：表示一个请求已经进入后台排队（异步任务）<br>204 NO CONTENT - [DELETE]：用户删除数据成功。<br>400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。<br>401 Unauthorized - [</em>]：表示用户没有权限（令牌、用户名、密码错误）。<br>403 Forbidden - [<em>] 表示用户得到授权（与401错误相对），但是访问是被禁止的。<br>404 NOT FOUND - [</em>]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。<br>406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。<br>410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。<br>422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。<br>500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。</span><br><li>错误处理，状态码是4xx时，应返回错误信息，error当做key。</li><br><li>返回结果，针对不同操作，服务器向用户返回的结果应该符合以下规范。</li>
+
+<pre><code>GET /collection：返回资源对象的列表（数组）
+GET /collection/resource：返回单个资源对象
+POST /collection：返回新生成的资源对象
+PUT /collection/resource：返回完整的资源对象
+PATCH /collection/resource：返回完整的资源对象
+DELETE /collection/resource：返回一个空文档
+</code></pre><li>Hypermedia API，RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。</li>    
+
+<pre><code>{&quot;link&quot;: {
+&quot;rel&quot;:   &quot;collection https://www.example.com/zoos&quot;,
+&quot;href&quot;:  &quot;https://api.example.com/zoos&quot;,
+&quot;title&quot;: &quot;List of zoos&quot;,
+&quot;type&quot;:  &quot;application/vnd.yourformat+json&quot;
+}}
+</code></pre><p></p>
+<p></p><h2>基于Django Rest Framework的实现</h2>  <p></p>
+<h4>step 1:创建djnago程序，并注册rest-framework</h4>
+
+<pre><code>INSTALLED_APPS = (
+&apos;django.contrib.admin&apos;,
+&apos;django.contrib.auth&apos;,
+&apos;django.contrib.contenttypes&apos;,
+&apos;django.contrib.sessions&apos;,
+&apos;django.contrib.messages&apos;,
+&apos;django.contrib.staticfiles&apos;,
+&apos;luffyapp&apos;,
+&apos;rest_framework&apos;
+)
+</code></pre><p></p><h4>step 2:url和视图函数</h4><br>url:<p></p>
+<pre><code>from luffyapp import views
+urlpatterns = [
+    url(r&apos;^admin/&apos;, include(admin.site.urls)),
+    url(r&apos;^courses/&apos;,views.Courses.as_view()),
+]
+</code></pre><p>views:</p>
+<pre><code>from rest_framework.views import APIView
+from django.shortcuts import HttpResponse
+from rest_framework.response import Response
+from luffyapp import models
+
+class Courses(APIView):
+def get(self,request,*args,**kwargs):
+    return HttpResponse(&apos;....&apos;)
+
+def post(self, request, *args, **kwargs):
+    pass
+
+def put(self, request, *args, **kwargs):
+    pass
+
+def delete(self, request, *args, **kwargs):
+    pass
+</code></pre><p>这样简单的程序能跑起来啦。。。。。。</p>
+<p></p><h4>rest-framework的生命周期：</h4><p></p>
+<pre><code>1. 中间件
+2. 路由系统
+3. 视图
+    - request二次封装（解析器，认证，选择，view+参数) 
+    - try： 
+        - 获取版本 
+        - 认证
+        - 权限
+        - 节流,限制访问次数 
+        - response = GET/POST/DELETE等方法
+    - except:
+        - response = 异常        
+    - 处理响应内容
+</code></pre><p>下面详细讲下视图里的各个步骤： </p>
+<p></p><h4>获取版本和版本控制</h4><p></p>
+<p></p><h4>基于url的正则方式</h4><br>settings.py:<p></p>
+<pre><code>REST_FRAMEWORK = {
+ &apos;DEFAULT_VERSION&apos;: &apos;v1&apos;,            # 默认版本
+ &apos;ALLOWED_VERSIONS&apos;: [&apos;v1&apos;, &apos;v2&apos;],   # 允许的版本
+ &apos;VERSION_PARAM&apos;: &apos;version&apos;,          # URL中获取值的key
+ &apos;DEFAULT_VERSIONING_CLASS&apos;:&apos;rest_framework.versioning.URLPathVersioning&apos;, 默认的版本控制类
+ }
+</code></pre><p>urls.py:</p>
+<pre><code>from django.conf.urls import url, include
+from web.views import TestView
+urlpatterns = [
+    url(r&apos;^(?P&lt;version&gt;[v1|v2]+)/test/&apos;, TestView.as_view(), name=&apos;test&apos;),
+]
+</code></pre><p>views.py:</p>
+<pre><code>from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.versioning import URLPathVersioning
+class TestView(APIView):
+    #versioning_class = URLPathVersioning #setting里配置里这里就不用写，写在这或setting里都可以，但是写在setting里是全局的
+    def get(self, request, *args, **kwargs):
+        # 获取版本
+        print(request.version)
+        # 获取版本管理的类
+        print(request.versioning_scheme)    
+        # 反向生成URL
+        reverse_url = request.versioning_scheme.reverse(&apos;test&apos;, request=request)
+        print(reverse_url)
+        return Response(&apos;GET请求，响应内容&apos;)
+    def post(self, request, *args, **kwargs):
+        return Response(&apos;POST请求，响应内容&apos;)
+    def put(self, request, *args, **kwargs):
+        return Response(&apos;PUT请求，响应内容&apos;)
+</code></pre><p>测试URL：<code>http://127.0.0.1:8000/v/courses</code>        </p>
+<p></p><h4>基于url的get传参方式</h4><br>settings.py同上。更新：<code>&#39;DEFAULT_VERSIONING_CLASS&#39;:&#39;rest_framework.versioning.QueryParameterVersioning&#39;</code><br>urls.py:<p></p>
+<pre><code>from django.conf.urls import include, url
+from django.contrib import admin
+from luffyapp import views 
+urlpatterns = [
+    url(r&apos;^admin/&apos;, include(admin.site.urls)),
+    url(r&apos;^courses/&apos;,views.Courses.as_view()),
+]  
+</code></pre><p>views.py 同上</p>
+<pre><code>from rest_framework.versioning import QueryParameterVersioning
+versioning_class = QueryParameterVersioning  
+</code></pre><p>测试URL：<code>http://127.0.0.1:8000/courses?version=v1</code>  </p>
+<p></p><h4>基于 accept 请求头方式</h4><br>  如：<code>Accept: application/json; version=1.0</code><br>  settings.py同上。更新：<code>&#39;DEFAULT_VERSIONING_CLASS&#39;:&#39;rest_framework.versioning.AcceptHeaderVersioning&#39;</code><br>  url.py同上<br>  views.py 同上<p></p>
+<pre><code>from rest_framework.versioning import AcceptHeaderVersioning
+versioning_class = AcceptHeaderVersioning
+</code></pre><p></p><h4>基于主机名方法</h4><br>  如：<code>v1.example.com</code><br>  setting.py:<p></p>
+<pre><code>ALLOWED_HOSTS = [&apos;*&apos;]
+REST_FRAMEWORK = {
+    &apos;DEFAULT_VERSION&apos;: &apos;v1&apos;,  # 默认版本
+    &apos;ALLOWED_VERSIONS&apos;: [&apos;v1&apos;, &apos;v2&apos;],  # 允许的版本
+    &apos;VERSION_PARAM&apos;: &apos;version&apos;,  # URL中获取值的key
+    &apos;DEFAULT_VERSIONING_CLASS&apos;:&apos;rest_framework.versioning.HostNameVersioning&apos;     
+}
+</code></pre><p>  urls.py 和views.py同上</p>
+<p></p><h4>基于django路由系统的namespace</h4><br> 如：<code>example.com/v1/users/</code><br> settings.py 更新<code>DEFAULT_VERSIONING_CLASS&#39;:&#39;rest_framework.versioning.NamespaceVersioning</code><br> urls.py:<p></p>
+<pre><code>from django.conf.urls import include, url
+from django.contrib import admin
+from luffyapp import views
+urlpatterns = [
+    url(r&apos;^admin/&apos;, include(admin.site.urls)),
+    url(r&apos;^v1/&apos;,([url(r&apos;courses/&apos;, views.Courses.as_view(),name=&apos;courses&apos;),],None,&apos;v1&apos;)),
+]
+</code></pre><p> views.py 同上<br> 测试URL：<code>http://127.0.0.1:8000/v1/courses/</code></p>
+<p></p><h4>认证</h4><br>重写认证的类<br>auth.py<p></p>
+<pre><code>from rest_framework.authentication import BaseAuthentication
+from rest_framework import exceptions
+from luffyapp import models
+class CustomAuthentication(BaseAuthentication):
+    def authenticate(self, request):
+        token = request._request.GET.get(&apos;token&apos;)
+        token_obj = models.UserTOken.objects.filter(token=token).first()
+        if token_obj:
+            return (token_obj.user,token_obj)
+        raise exceptions.AuthenticationFailed(&apos;认证失败&apos;)
+def authenticate_header(self, request):
+    pass
+</code></pre><p>应用:<br>需要的数据均存放在app的数据库里，表结构如下：</p>
+<pre><code>class Userinfo(models.Model):
+username = models.CharField(max_length=32,verbose_name=&apos;用户名&apos;)
+pwd = models.CharField(max_length=9,verbose_name=&apos;密码&apos;)
+class UserTOken(models.Model):
+user = models.OneToOneField(to=Userinfo, null=True, blank=True)
+token = models.CharField(max_length=12,verbose_name=&apos;token&apos;)   
+</code></pre><p>视图函数： </p>
+<pre><code>class Courses(APIView):
+&apos;&apos;&apos;
+不允许匿名用户登录
+&apos;&apos;&apos;
+authentication_classes = [CustomAuthentication, ]
+def get(self,request,*args,**kwargs):
+    return HttpResponse(&apos;....&apos;)
+def post(self,request, *args, **kwargs):
+    pass
+def put(self, request, *args, **kwargs):
+    pass
+def delete(self, request, *args, **kwargs):
+    pass
+
+def create_token(username):
+    import time
+    import hashlib
+    ctime = str(time.time())
+    md = hashlib.md5(username.encode(&apos;utf-8&apos;))
+    md.update(ctime.encode(&apos;utf-8&apos;))
+    return md.hexdigest()
+
+class Login(APIView):
+&apos;&apos;&apos;测试&apos;&apos;&apos;
+def get(self,request,*args,**kwargs):
+    name = request.GET.get(&apos;name&apos;)
+    pwd = request.GET.get(&apos;pwd&apos;)
+    user_obj = models.Userinfo.objects.filter(username=name,pwd=pwd).first()
+    if user_obj:
+        token = create_token(user_obj.username)
+        models.UserTOken.objects.update_or_create(user=user_obj,defaults={&apos;token&apos;:token})
+        return JsonResponse(token,safe=False) 
+</code></pre><p>模拟登录：<br>    测试URL1：<a href="http://127.0.0.1:8000/v1/login/?name=mona&amp;pwd=123" target="_blank" rel="noopener">http://127.0.0.1:8000/v1/login/?name=mona&amp;pwd=123</a> ;获取token;<br>    测试url2:<a href="http://127.0.0.1:8000/v1/courses/?name=mona&amp;pwd=123&amp;token=4f892367d9b9a1c53b6f397fc907426a" target="_blank" rel="noopener">http://127.0.0.1:8000/v1/courses/?name=mona&amp;pwd=123&amp;token=4f892367d9b9a1c53b6f397fc907426a</a><br>    登录成功则表示成功<br>全局配置<br>setting.py:</p>
+<pre><code>REST_FRAMEWORK = {
+&apos;DEFAULT_VERSION&apos;: &apos;v1&apos;,            # 默认版本
+&apos;ALLOWED_VERSIONS&apos;: [&apos;v1&apos;, &apos;v2&apos;],   # 允许的版本
+&apos;VERSION_PARAM&apos;: &apos;version&apos;,          # URL中获取值的key
+&apos;DEFAULT_VERSIONING_CLASS&apos;:&apos;rest_framework.versioning.NamespaceVersioning&apos;,
+
+&quot;UNAUTHENTICATED_USER&quot;: None,
+&quot;UNAUTHENTICATED_TOKEN&quot;: None,
+
+&quot;DEFAULT_AUTHENTICATION_CLASSES&quot;: [
+    &apos;luffyapp.auth.CustomAuthentication&apos;,]
+}
+</code></pre><p></p><h4>权限</h4><br>permission.py<p></p>
+<pre><code>from rest_framework.permissions import BasePermission
+class CustomPermission(BasePermission):
+    def has_permission(self, request, view):
+        user_type = request.user.type
+        if user_type==2:
+            return True
+        return False
+</code></pre><p>应用<br>更新下数据库，并添加数据：</p>
+<pre><code>class Userinfo(models.Model):
+    username = models.CharField(max_length=32,verbose_name=&apos;用户名&apos;)
+    pwd = models.CharField(max_length=9,verbose_name=&apos;密码&apos;)
+    user_choices = [
+        (1,&apos;普通用户&apos;),
+        (2,&apos;一般管理员&apos;),
+        (3,&apos;超级管理员&apos;),
+    ]
+    type = models.IntegerField(choices=user_choices,verbose_name=&apos;用户类型&apos;)
+class UserTOken(models.Model):
+    user = models.OneToOneField(to=Userinfo, null=True, blank=True)
+    token = models.CharField(max_length=12,verbose_name=&apos;token&apos;)
+</code></pre><p>views.py</p>
+<pre><code>from rest_framework import views
+from django.shortcuts import HttpResponse
+from django.http import JsonResponse
+from luffyapp import models
+from rest_framework.versioning import URLPathVersioning
+from permission import CustomPermission
+
+def create_token(username):
+    import time
+    import hashlib
+    ctime = str(time.time())
+    md = hashlib.md5(username.encode(&apos;utf-8&apos;))
+    md.update(ctime.encode(&apos;utf-8&apos;))
+    return md.hexdigest()
+
+class Courses(views.APIView):
+    &apos;&apos;&apos;
+    不允许匿名用户登录
+    &apos;&apos;&apos;
+    # authentication_classes = [CustomAuthentication, ]
+    permission_classes = [CustomPermission,]
+    def get(self,request,*args,**kwargs):
+        self.dispatch
+
+    print(request.version)
+    return HttpResponse(&apos;课程视图&apos;)
+class Teachers(views.APIView):
+    def get(self, request, *args, **kwargs):
+        print(request.version)
+        return HttpResponse(&apos;教师视图&apos;)
+class Login(views.APIView):
+    authentication_classes = [ ]
+    permission_classes = []
+    def get(self,request,*args,**kwargs):
+        name = request.GET.get(&apos;name&apos;)
+        pwd = request.GET.get(&apos;pwd&apos;)
+        user_obj = models.Userinfo.objects.filter(username=name,pwd=pwd).first()
+        if user_obj:
+            token = create_token(user_obj.username)
+            models.UserTOken.objects.update_or_create(user=user_obj,defaults={&apos;token&apos;:token})
+            return JsonResponse(token,safe=False)               
+</code></pre><p>测试url:mona 的用户类型是1，root的用户类型是2，权限设置的时候规定了类型为2的可以访问，其余的不可以访问<br>不能访问<br><code>http://127.0.0.1:8000/v1/login/?name=mona&amp;pwd=123</code><br><code>http://127.0.0.1:8000/v1/teachers/?name=mona&amp;pwd=123&amp;token=c6d05d9b9abb2e10ef8f6f9f9b7cd8ff</code><br>可以访问<br> <code>http://127.0.0.1:8000/v1/login/?name=root&amp;pwd=123</code><br><code>http://127.0.0.1:8000/v1/teachers/?name=root&amp;pwd=123&amp;token=vhjkk9bjabbkjhjhef8f6f9f9b7gyhjfh</code>               </p>
+<p></p><h4>限制访问次数</h4><br>自定义类<p></p>
+<pre><code>from rest_framework.throttling import SimpleRateThrottle
+class CustomAnnoThrottle(SimpleRateThrottle):
+    scope = &apos;anon&apos;
+    def get_cache_key(self, request, view):
+        return self.cache_format%{
+            &apos;scope&apos;:self.scope,
+            &apos;ident&apos;:self.get_ident(request)
+        }
+def allow_request(self, request, view):
+    if request.user:
+        return True
+
+    self.key = self.get_cache_key(request, view)
+    if self.key is None:
+        return True
+
+    self.history = self.cache.get(self.key, [])
+    self.now = self.timer()
+
+    while self.history and self.history[-1] &lt;= self.now - self.duration:
+        self.history.pop()
+    if len(self.history) &gt;= self.num_requests:
+        return self.throttle_failure()
+    return self.throttle_success()
+
+class CustomUserThrottle(SimpleRateThrottle):
+    scope = &apos;user&apos;
+
+def allow_request(self, request, view):
+    if not request.user:
+        return True
+    self.key = request.user.username
+    self.history = self.cache.get(self.key, [])
+    self.now = self.timer()
+
+    while self.history and self.history[-1] &lt;= self.now - self.duration:
+        self.history.pop()
+    if len(self.history) &gt;= self.num_requests:
+        return self.throttle_failure()
+    return self.throttle_success()
+</code></pre><p>settings.py里的配置：</p>
+<pre><code>REST_FRAMEWORK = {
+    &apos;DEFAULT_VERSION&apos;: &apos;v1&apos;,            # 默认版本
+    &apos;ALLOWED_VERSIONS&apos;: [&apos;v1&apos;, &apos;v2&apos;],   # 允许的版本
+    &apos;VERSION_PARAM&apos;: &apos;version&apos;,          # URL中获取值的key
+    &apos;DEFAULT_VERSIONING_CLASS&apos;:&apos;rest_framework.versioning.URLPathVersioning&apos;,
+
+&quot;UNAUTHENTICATED_USER&quot;: None,
+&quot;UNAUTHENTICATED_TOKEN&quot;: None,
+
+&quot;DEFAULT_THROTTLE_RATES&quot;: {
+    &apos;anon&apos;: &apos;10/m&apos;,#每分钟10次
+    &apos;user&apos;: &apos;20/m&apos;,#每分钟20次
+}
+}
+</code></pre><p>应用和权限认证差不多，如果有不清楚的，记得看源码    </p>
+<p></p><h4>序列化</h4><br>rest-framework里的Serializer不仅有序列化的功能，还可以做用户认证。<br>序列化用法：<br>views.py<p></p>
+<pre><code>from rest_framework.response import Response
+from rest_framework import serializers
+class UserSerialize(serializers.Serializer): #创建序列化类，里面的字段必须和数据库里的字段保持一致
+    username = serializers.CharField()
+    pwd = serializers.CharField()
+    type = serializers.IntegerField()
+
+class SerializeView(APIView):
+    def get(self,request,*args,**kwargs):
+        user_list = models.Userinfo.objects.all()
+        user = UserSerialize(instance=user_list,many=True,context={&apos;request&apos;: request}) #如果是单个对象，many=False,对象列表的话就是True
+        return Response(user.data)
+</code></pre><p>urls.py:</p>
+<pre><code>from django.conf.urls import url
+from django.contrib import admin
+from luffyapp.views import ParserView,SerializeView
+
+urlpatterns = [
+    url(r&apos;^admin/&apos;, admin.site.urls),
+    url(r&apos;^(?P&lt;version&gt;[v1|v2]+)/parse/&apos;,ParserView.as_view()),
+    url(r&apos;^(?P&lt;version&gt;[v1|v2]+)/serialize/&apos;,SerializeView.as_view()),
+]
+</code></pre><p>用户认证详解：</p>
+<pre><code>class PasswordValidator:
+    def __init__(self,base):
+        self.base = base
+    def __call__(self,value):
+        &apos;&apos;&apos;
+        :param value: 用户发来的请求
+        :return:
+        &apos;&apos;&apos;
+        print(value)
+        import re
+        if len(value) &lt; 5 or re.findall(r&apos;\W+&apos;,value):
+            message = &apos;密码必须大于5位，并包含字母和数字&apos;
+            raise serializers.ValidationError(message)
+    def set_context(self, serializer_field):
+        &quot;&quot;&quot;
+        This hook is called by the serializer instance,
+        prior to the validation call being made.
+        &quot;&quot;&quot;
+        # 执行验证之前调用,serializer_fields是当前字段对象
+        pass
+
+class UserSerialize(serializers.Serializer):
+    username = serializers.CharField(error_messages={&apos;required&apos;:&apos;用户名不能为空&apos;}) #自定义错误信息
+    pwd = serializers.CharField(validators=[PasswordValidator(11)]) #自定义认证条件
+    type = serializers.IntegerField()
+    ug = serializers.CharField(source=&quot;ug.title&quot;, required=False) #可以连表显示
+也可以用modelserialize:
+class UserSerialize(serializers.ModelSerializer):
+    #也可以在外面自定义字段
+    class Meta:
+        model = models.UserInfo
+        fields = &quot;__all__&quot;
+        extra_kwargs = { #该字段里配置相应等参数
+            &apos;user&apos;: {&apos;min_length&apos;: 6}, 
+            &apos;pwd&apos;: {&apos;validators&apos;: [PasswordValidator(666), ]},
+        }
+        depth = 2 # 0 10
+
+class SerializeView(APIView):
+    def post(self,request,*args,**kwargs):
+        ser = UserSerialize(data=request.data) #传入data
+        if ser.is_valid(): #判断数据是否有效
+            return Response(ser.validated_data)
+        else:
+           return Response(ser.errors)
+</code></pre></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/django/" rel="tag">#django</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/20/js中的this到底是什么/" rel="prev">js中的this到底是什么?</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/20/python虚拟环境的搭建/" rel="next">python虚拟环境的搭建</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+        <style type="text/css">
+
+    .donate_bar {
+        text-align: center;
+        margin-top : 5%;
+    }
+
+    .donate_bar.hidden {
+        display:none;
+    }
+/*
+    .donate_bar a.btn_donate {
+        display: inline-block;
+        width: 82px;
+        height: 82px;
+        margin-left:auto;
+        margin-right:auto;
+
+        background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat;
+        _background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat; 
+
+        -webkit-transition: background 0s;
+        -moz-transition: background 0s;
+        -o-transition: background 0s;
+        -ms-transition: background 0s;
+        transition: background 0s;
+    }
+*/
+    .donate_bar a.btn_donate:hover { 
+        // background-position: 0px -82px;
+        color: #87daff;
+    }
+
+    .donate_bar .donate_txt {
+        display: block;
+        color: #9d9d9d;
+        font: 14px/2 "Microsoft Yahei";
+    }
+
+    .bold { 
+        font-weight: bold; 
+    }
+
+    .post-donate a {
+        border-bottom: 0px;
+    }
+
+    #donate_guide table {
+        border: none;
+    }
+
+    #donate_guide td {
+        border-bottom: none;
+        border-right: none;
+        // background: #333333;
+        valign: top;
+    }
+
+</style>
+
+
+
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Mona" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Mona</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">RESTful 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">restframework 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">RESTful API设计简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">基于Django Rest Framework的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.1.</span> <span class="nav-text">step 1:创建djnago程序，并注册rest-framework</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.2.</span> <span class="nav-text">step 2:url和视图函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.3.</span> <span class="nav-text">rest-framework的生命周期：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.4.</span> <span class="nav-text">获取版本和版本控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.5.</span> <span class="nav-text">基于url的正则方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.6.</span> <span class="nav-text">基于url的get传参方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.7.</span> <span class="nav-text">基于 accept 请求头方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.8.</span> <span class="nav-text">基于主机名方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.9.</span> <span class="nav-text">基于django路由系统的namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.10.</span> <span class="nav-text">认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.11.</span> <span class="nav-text">权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.12.</span> <span class="nav-text">限制访问次数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.13.</span> <span class="nav-text">序列化</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mona
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

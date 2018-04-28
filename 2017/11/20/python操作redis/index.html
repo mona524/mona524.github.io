@@ -1,0 +1,1013 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mala">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="redis 简介redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python操作redis">
+<meta property="og:url" content="http://yoursite.com/2017/11/20/python操作redis/index.html">
+<meta property="og:site_name" content="Mona">
+<meta property="og:description" content="redis 简介redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-20T12:21:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python操作redis">
+<meta name="twitter:description" content="redis 简介redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mala',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> python操作redis | Mona </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title"></span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              python操作redis
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2017-11-20T17:56:53+08:00" content="2017-11-20">
+            2017-11-20
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Python/" itemprop="url" rel="index">
+                  <span itemprop="name">python</span>
+                </a>
+              </span>
+
+              
+              
+                ， 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Python/database/" itemprop="url" rel="index">
+                  <span itemprop="name">database</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p></p><h2>redis 简介</h2><br>redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set –有序集合)和hash（哈希类型）。<br><br>这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。<br><br>与memcached一样，为了保证效率，数据都是缓存在内存中。<br><br>区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。<br><p></p>
+<p></p><h3>redis的优点</h3><br>(1) 速度快，因为数据存在内存中，类似于HashMap，HashMap的优势就是查找和操作的时间复杂度都是O(1)<br><br>(2) 支持丰富数据类型，支持string，list，set，sorted set，hash<br><br>(3) 支持事务，操作都是原子性，所谓的原子性就是对数据的更改要么全部执行，要么全部不执行<br><br>(4) 丰富的特性：可用于缓存，消息，按key设置过期时间，过期后将会自动删除<br><p></p>
+<p></p><h3>redis相比memcached有哪些优势?</h3><br>(1) memcached所有的值均是简单的字符串，redis作为其替代者，支持更为丰富的数据类型<br><br>(2) redis的速度比memcached快很多<br><br>(3) redis可以持久化其数据<br><p></p>
+<p></p><h3> Memcache与Redis的区别都有哪些？</h3><br>1)、存储方式<br>Memecache把数据全部存在内存之中，断电后会挂掉，数据不能超过内存大小。<br>Redis有部份存在硬盘上，这样能保证数据的持久性。<br>2)、数据支持类型<br>Memcache对数据类型支持相对简单。<br>Redis有复杂的数据类型。<br>3），value大小<br>redis最大可以达到1GB，而memcache只有1MB<p></p>
+<p></p><h3>redis常见性能问题和解决方案：</h3><br>(1) Master最好不要做任何持久化工作，如RDB内存快照和AOF日志文件<br><br>(2) 如果数据比较重要，某个Slave开启AOF备份数据，策略设置为每秒同步一次<br><br>(3) 为了主从复制的速度和连接的稳定性，Master和Slave最好在同一个局域网内<br><br>(4) 尽量避免在压力很大的主库上增加从库<br><br>(5) 主从复制不要用图状结构，用单向链表结构更为稳定，即：Master &lt;- Slave1 &lt;- Slave2 &lt;- Slave3…<br><br>这样的结构方便解决单点故障问题，实现Slave对Master的替换。如果Master挂了，可以立刻启用Slave1做Master，其他不变。<br><p></p>
+<p></p><h3>MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据</h3><br> 相关知识：redis 内存数据集大小上升到一定大小的时候，就会施行数据淘汰策略。redis 提供 6种数据淘汰策略：<br><br> voltile-lru：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰<br><br> volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰<br><br> volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰<br><br> allkeys-lru：从数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰<br><br> allkeys-random：从数据集（server.db[i].dict）中任意选择数据淘汰<br><br> no-enviction（驱逐）：禁止驱逐数据<br><p></p>
+<p></p><h3>redis 最适合的场景</h3><br>1）、会话缓存（Session Cache）<br><br>最常用的一种使用Redis的情景是会话缓存（session cache）。用Redis缓存会话比其他存储（如Memcached）的优势在于：Redis提供持久化。当维护一个不是严格要求一致性的缓存时，如果用户的购物车信息全部丢失，大部分人都会不高兴的，现在，他们还会这样吗？<br><br>幸运的是，随着 Redis 这些年的改进，很容易找到怎么恰当的使用Redis来缓存会话的文档。甚至广为人知的商业平台Magento也提供Redis的插件。<br><br>（2）、全页缓存（FPC）<br><br>除基本的会话token之外，Redis还提供很简便的FPC平台。回到一致性问题，即使重启了Redis实例，因为有磁盘的持久化，用户也不会看到页面加载速度的下降，这是一个极大改进，类似PHP本地FPC。<br><br>再次以Magento为例，Magento提供一个插件来使用Redis作为全页缓存后端。<br><br>此外，对WordPress的用户来说，Pantheon有一个非常好的插件  wp-redis，这个插件能帮助你以最快速度加载你曾浏览过的页面。<br><br>（3）、队列<br><br>Reids在内存存储引擎领域的一大优点是提供 list 和 set 操作，这使得Redis能作为一个很好的消息队列平台来使用。Redis作为队列使用的操作，就类似于本地程序语言（如Python）对 list 的 push/pop 操作。<br><br>如果你快速的在Google中搜索“Redis queues”，你马上就能找到大量的开源项目，这些项目的目的就是利用Redis创建非常好的后端工具，以满足各种队列需求。例如，Celery有一个后台就是使用Redis作为broker，你可以从这里去查看。<br><br>（4），排行榜/计数器<br><br>Redis在内存中对数字进行递增或递减的操作实现的非常好。集合（Set）和有序集合（Sorted Set）也使得我们在执行这些操作的时候变的非常简单，Redis只是正好提供了这两种数据结构。所以，我们要从排序集合中获取到排名最靠前的10个用户–我们称之为“user_scores”，我们只需要像下面一样执行即可：<br><br>当然，这是假定你是根据你用户的分数做递增的排序。如果你想返回用户及用户的分数，你需要这样执行：<br><br>ZRANGE user_scores 0 10 WITHSCORES<br><br>Agora Games就是一个很好的例子，用Ruby实现的，它的排行榜就是使用Redis来存储数据的，你可以在这里看到。<br><br>（5）、发布/订阅<br><br>最后（但肯定不是最不重要的）是Redis的发布/订阅功能。发布/订阅的使用场景确实非常多。我已看见人们在社交网络连接中使用，还可作为基于发布/订阅的脚本触发器，甚至用Redis的发布/订阅功能来建立聊天系统！（不，这是真的，你可以去核实）。<br><p></p>
+<p></p><h2>Python操作Redis</h2><br>pip3 install redis<br>API使用<p></p>
+<p></p><h3>1、操作模式</h3><br>redis-py提供两个类Redis和StrictRedis用于实现Redis的命令，StrictRedis用于实现大部分官方的命令，并使用官方的语法和命令，Redis是StrictRedis的子类，用于向后兼容旧版本的redis-py。<br><p></p>
+<pre><code>import redis
+r = redis.Redis(host=&apos;127.0.0.1&apos;)
+r.set(&apos;name&apos;,&apos;mona&apos;)
+print(r.get(&apos;name&apos;))
+</code></pre><p></p><h3>2、连接池</h3><br>redis-py使用connection pool来管理对一个redis server的所有连接，避免每次建立、释放连接的开销。默认，每个Redis实例都会维护一个自己的连接池。可以直接建立一个连接池，然后作为参数Redis，这样就可以实现多个Redis实例共享一个连接池。<p></p>
+<pre><code>import redis
+pool = redis.ConnectionPool(host=&apos;127.0.0.1&apos;)
+r = redis.Redis(connection_pool=pool)
+r.set(&apos;name&apos;,&apos;mona&apos;)
+print(r.get(&apos;name&apos;))
+</code></pre><p></p><h3>3、操作</h3><br>String操作，redis中的String在在内存中按照一个name对应一个value来存储。<br>set(name, value, ex=None, px=None, nx=False, xx=False)<p></p>
+<pre><code>在Redis中设置值，默认，不存在则创建，存在则修改
+参数：
+ ex，过期时间（秒）
+ px，过期时间（毫秒）
+ nx，如果设置为True，则只有name不存在时，当前set操作才执行
+ xx，如果设置为True，则只有name存在时，岗前set操作才执行
+</code></pre><p>setnx(name, value),<code>设置值，只有name不存在时，执行设置操作（添加）</code><br>setex(name, value, time)</p>
+<pre><code># 设置值
+# 参数： # time，过期时间（数字秒 或 timedelta对象）
+</code></pre><p>psetex(name, time_ms, value) <code># 设置值# 参数：# time_ms，过期时间（数字毫秒 或 timedelta对象）</code><br>mset(<em>args, *</em>kwargs)</p>
+<pre><code>批量设置值
+如：mset(k1=&apos;v1&apos;, k2=&apos;v2&apos;)
+或 mget({&apos;k1&apos;: &apos;v1&apos;, &apos;k2&apos;: &apos;v2&apos;})
+</code></pre><p>get(name): 获取值<br>mget(keys, *args)</p>
+<pre><code>批量获取
+如： mget(&apos;ylr&apos;, &apos;name&apos;)
+或r.mget([&apos;ylr&apos;, &apos;name&apos;])
+</code></pre><p>getset(name, value): 设置新值并获取原来的值<br>getrange(key, start, end)</p>
+<pre><code># 获取子序列（根据字节获取，非字符）
+# 参数：
+# name，Redis 的 name
+# start，起始位置（字节）
+# end，结束位置（字节）
+# 如： &quot;姓名&quot; ，0-3表示 &quot;姓&quot;
+</code></pre><p>setrange(name, offset, value)</p>
+<pre><code># 修改字符串内容，从指定字符串索引开始向后替换（新值太长时，则向后添加）
+# 参数：
+# offset，字符串的索引，字节（一个汉字三个字节）
+# value，要设置的值
+</code></pre><p>setbit(name, offset, value)</p>
+<pre><code># 对name对应值的二进制表示的位进行操作
+# 参数：
+# name，redis的name
+# offset，位的索引（将值变换成二进制后再进行索引）
+# value，值只能是 1 或 0
+# 注：如果在Redis中有一个对应： n1 = &quot;foo&quot;，
+    那么字符串foo的二进制表示为：01100110 01101111 01101111
+所以，如果执行 setbit(&apos;n1&apos;, 7, 1)，则就会将第7位设置为1，
+    那么最终二进制则变成 01100111 01101111 01101111，即：&quot;goo&quot;
+</code></pre><p>getbit(name, offset)：# 获取name对应的值的二进制表示中的某位的值 （0或1）<br>bitcount(key, start=None, end=None)</p>
+<pre><code># 获取name对应的值的二进制表示中 1 的个数
+# 参数：
+# key，Redis的name
+# start，位起始位置
+# end，位结束位置
+</code></pre><p>bitop(operation, dest, *keys)</p>
+<pre><code># 获取多个值，并将值做位运算，将最后的结果保存至新的name对应的值
+# 参数：
+# operation,AND（并） 、 OR（或） 、 NOT（非） 、 XOR（异或）
+# dest, 新的Redis的name
+# *keys,要查找的Redis的name
+# 如：
+bitop(&quot;AND&quot;, &apos;new_name&apos;, &apos;n1&apos;, &apos;n2&apos;, &apos;n3&apos;)
+# 获取Redis中n1,n2,n3对应的值，然后讲所有的值做位运算（求并集），然后将结果保存 new_name 对应的值中
+</code></pre><p>strlen(name)：# 返回name对应值的字节长度（一个汉字3个字节）<br>incr(self, name, amount=1)</p>
+<pre><code># 自增 name对应的值，当name不存在时，则创建name＝amount，否则，则自增。
+# 参数：
+# name,Redis的name
+# amount,自增数（必须是整数） 
+# 注：同incrby
+</code></pre><p>incrbyfloat(self, name, amount=1.0)</p>
+<pre><code># 自增 name对应的值，当name不存在时，则创建name＝amount，否则，则自增。
+# 参数：
+# name,Redis的name
+# amount,自增数（浮点型）
+</code></pre><p>decr(self, name, amount=1)</p>
+<pre><code># 自减 name对应的值，当name不存在时，则创建name＝amount，否则，则自减。
+# 参数：
+# name,Redis的name
+# amount,自减数（整数）
+</code></pre><p>append(key, value) </p>
+<pre><code># 在redis name对应的值后面追加内容
+# 参数：
+key, redis的name
+value, 要追加的字符串
+</code></pre><p>Hash操作：<br>hset(name, key, value)</p>
+<pre><code># name对应的hash中设置一个键值对（不存在，则创建；否则，修改）
+# 参数：
+# name，redis的name
+# key，name对应的hash中的key
+# value，name对应的hash中的value
+# 注：
+# hsetnx(name, key, value),当name对应的hash中不存在当前key时则创建（相当于添加）
+</code></pre><p>hmset(name, mapping)</p>
+<pre><code># 在name对应的hash中批量设置键值对
+# 参数：
+# name，redis的name
+# mapping，字典，如：{&apos;k1&apos;:&apos;v1&apos;, &apos;k2&apos;: &apos;v2&apos;}
+# 如：
+# r.hmset(&apos;xx&apos;, {&apos;k1&apos;:&apos;v1&apos;, &apos;k2&apos;: &apos;v2&apos;})
+</code></pre><p>hget(name,key) #在name对应的hash中获取根据key获取value<br>hmget(name, keys, *args)</p>
+<pre><code># 在name对应的hash中获取多个key的值
+# 参数：
+# name，reids对应的name
+# keys，要获取key集合，如：[&apos;k1&apos;, &apos;k2&apos;, &apos;k3&apos;]
+# *args，要获取的key，如：k1,k2,k3
+</code></pre><p>hgetall(name)  获取name对应hash的所有键值<br>hlen(name)   获取name对应的hash中键值对的个数<br>hkeys(name)  # 获取name对应的hash中所有的key的值<br>hvals(name)  # 获取name对应的hash中所有的value的值<br>hexists(name, key) # 检查name对应的hash是否存在当前传入的key<br>hdel(name,*keys)  # 将name对应的hash中指定key的键值对删除<br>hincrby(name, key, amount=1)</p>
+<pre><code>自增name对应的hash中的指定key的值，不存在则创建key=amount
+# 参数：
+# name，redis中的name
+# key， hash对应的key
+# amount，自增数（整数）
+</code></pre><p>hincrbyfloat(name, key, amount=1.0)</p>
+<pre><code># 自增name对应的hash中的指定key的值，不存在则创建key=amount 
+# 参数：
+# name，redis中的name
+# key， hash对应的key
+# amount，自增数（浮点数）
+# 自增name对应的hash中的指定key的值，不存在则创建key=amount
+</code></pre><p>hscan(name, cursor=0, match=None, count=None)</p>
+<pre><code># 增量式迭代获取，对于数据大的数据非常有用，hscan可以实现分片的获取数据，并非一次性将数据全部获取完，从而放置内存被撑爆
+# 参数：
+# name，redis的name
+# cursor，游标（基于游标分批取获取数据）
+# match，匹配指定key，默认None 表示所有的key
+# count，每次分片最少获取个数，默认None表示采用Redis的默认分片个数
+# 如：
+# 第一次：cursor1, data1 = r.hscan(&apos;xx&apos;, cursor=0, match=None, count=None)
+# 第二次：cursor2, data1 = r.hscan(&apos;xx&apos;, cursor=cursor1, match=None, count=None)
+# ...
+# 直到返回值cursor的值为0时，表示数据已经通过分片获取完毕
+</code></pre><p>hscan_iter(name, match=None, count=None)</p>
+<pre><code># 利用yield封装hscan创建生成器，实现分批去redis中获取数据
+# 参数：
+# match，匹配指定key，默认None 表示所有的key
+# count，每次分片最少获取个数，默认None表示采用Redis的默认分片个数
+
+# 如：
+# for item in r.hscan_iter(&apos;xx&apos;):
+#     print item
+List操作，redis中的List在在内存中按照一个name对应一个List来存储。如图：
+</code></pre><p>lpush(name,values)</p>
+<pre><code># 在name对应的list中添加元素，每个新的元素都添加到列表的最左边
+# 如：
+# r.lpush(&apos;oo&apos;, 11,22,33)
+# 保存顺序为: 33,22,11
+
+# 扩展：
+# rpush(name, values) 表示从右向左操作
+</code></pre><p>lpushx(name,value)</p>
+<pre><code># 在name对应的list中添加元素，只有name已经存在时，值添加到列表的最左边
+# 更多：
+# rpushx(name, value) 表示从右向左操作
+</code></pre><p>llen(name)    # name对应的list元素的个数<br>linsert(name, where, refvalue, value))</p>
+<pre><code># 在name对应的列表的某一个值前或后插入一个新值
+# 参数：
+# name，redis的name
+# where，BEFORE或AFTER
+# refvalue，标杆值，即：在它前后插入数据
+# value，要插入的数据
+</code></pre><p>r.lset(name, index, value)</p>
+<pre><code># 对name对应的list中的某一个索引位置重新赋值
+# 参数：
+# name，redis的name
+# index，list的索引位置
+# value，要设置的值
+</code></pre><p>r.lrem(name, value, num)</p>
+<pre><code># 在name对应的list中删除指定的值
+# 参数：
+# name，redis的name
+# value，要删除的值
+# num，  num=0，删除列表中所有的指定值；
+       # num=2,从前到后，删除2个；
+       # num=-2,从后向前，删除2个
+</code></pre><p>lpop(name)</p>
+<pre><code># 在name对应的列表的左侧获取第一个元素并在列表中移除，返回值则是第一个元素 
+# 更多：
+# rpop(name) 表示从右向左操作
+</code></pre><p>lindex(name, index)    在name对应的列表中根据索引获取列表元素<br>lrange(name, start, end)</p>
+<pre><code># 在name对应的列表分片获取数据
+# 参数：
+# name，redis的name
+# start，索引的起始位置
+# end，索引结束位置
+</code></pre><p>ltrim(name, start, end)</p>
+<pre><code># 在name对应的列表中移除没有在start-end索引之间的值
+# 参数：
+# name，redis的name
+# start，索引的起始位置
+# end，索引结束位置
+</code></pre><p>rpoplpush(src, dst)</p>
+<pre><code># 从一个列表取出最右边的元素，同时将其添加至另一个列表的最左边
+# 参数：
+# src，要取数据的列表的name
+# dst，要添加数据的列表的name
+</code></pre><p>blpop(keys, timeout)</p>
+<pre><code># 将多个列表排列，按照从左到右去pop对应列表的元素
+# 参数：
+# keys，redis的name的集合
+# timeout，超时时间，当元素所有列表的元素获取完之后，阻塞等待列表内有数据的时间（秒）, 0 表示永远阻塞
+# 更多：
+# r.brpop(keys, timeout)，从右向左获取数据
+</code></pre><p>brpoplpush(src, dst, timeout=0)</p>
+<pre><code># 从一个列表的右侧移除一个元素并将其添加到另一个列表的左侧
+# 参数：
+# src，取出并要移除元素的列表对应的name
+# dst，要插入元素的列表对应的name
+# timeout，当src对应的列表中没有数据时，阻塞等待其有数据的超时时间（秒），0 表示永远阻塞
+自定义增量迭代
+# 由于redis类库中没有提供对列表元素的增量迭代，如果想要循环name对应的列表的所有元素，那么就需要：
+# 1、获取name对应的所有列表
+# 2、循环列表
+# 但是，如果列表非常大，那么就有可能在第一步时就将程序的内容撑爆，所有有必要自定义一个增量迭代的功能： 
+def list_iter(name):
+    &quot;&quot;&quot;
+    自定义redis列表增量迭代
+    :param name: redis中的name，即：迭代name对应的列表
+    :return: yield 返回 列表元素
+    &quot;&quot;&quot;
+    list_count = r.llen(name)
+    for index in xrange(list_count):
+        yield r.lindex(name, index)
+# 使用
+for item in list_iter(&apos;pp&apos;):
+    print item
+Set操作，Set集合就是不允许重复的列表
+</code></pre><p>sadd(name,values)  # name对应的集合中添加元素<br>scard(name)    获取name对应的集合中元素个数<br>sdiff(keys, <em>args)   在第一个name对应的集合中且不在其他name对应的集合的元素集合<br>sdiffstore(dest, keys, </em>args)   # 获取第一个name对应的集合中且不在其他name对应的集合，再将其新加入到dest对应的集合中<br>sinter(keys, <em>args)   # 获取多一个name对应集合的并集<br>sinterstore(dest, keys, </em>args)  # 获取多一个name对应集合的并集，再讲其加入到dest对应的集合中<br>sismember(name, value)   # 检查value是否是name对应的集合的成员<br>smembers(name)   # 获取name对应的集合的所有成员<br>smove(src, dst, value) # 将某个成员从一个集合中移动到另外一个集合<br>spop(name)    # 从集合的右侧（尾部）移除一个成员，并将其返回<br>srandmember(name, numbers)    # 从name对应的集合中随机获取 numbers 个元素<br>srem(name, values)   # 在name对应的集合中删除某些值<br>sunion(keys, <em>args）  # 获取多一个name对应的集合的并集<br>sunionstore(dest,keys, </em>args)    # 获取多一个name对应的集合的并集，并将结果保存到dest对应的集合中<br>sscan(name, cursor=0, match=None, count=None)<br>sscan_iter(name, match=None, count=None)</p>
+<pre><code>同字符串的操作，用于增量迭代分批获取元素，避免内存消耗太大
+</code></pre><p>有序集合，在集合的基础上，为每元素排序；元素的排序需要根据另外一个值来进行比较，所以，对于有序集合，每一个元素有两个值，即：值和分数，分数专门用来做排序。</p>
+<p>zadd(name, <em>args, *</em>kwargs)</p>
+<pre><code># 在name对应的有序集合中添加元素
+# 如：
+ # zadd(&apos;zz&apos;, &apos;n1&apos;, 1, &apos;n2&apos;, 2)
+ # 或
+ # zadd(&apos;zz&apos;, n1=11, n2=22)
+</code></pre><p>zcard(name)   # 获取name对应的有序集合元素的数量<br>zcount(name, min, max)   # 获取name对应的有序集合中分数 在 [min,max] 之间的个数<br>zincrby(name, value, amount)   # 自增name对应的有序集合的 name 对应的分数<br>r.zrange( name, start, end, desc=False, withscores=False, score_cast_func=float)</p>
+<pre><code># 按照索引范围获取name对应的有序集合的元素 
+# 参数：
+# name，redis的name
+# start，有序集合索引起始位置（非分数）
+# end，有序集合索引结束位置（非分数）
+# desc，排序规则，默认按照分数从小到大排序
+# withscores，是否获取元素的分数，默认只获取元素的值
+# score_cast_func，对分数进行数据转换的函数
+
+# 更多：
+# 从大到小排序
+# zrevrange(name, start, end, withscores=False, score_cast_func=float)
+
+# 按照分数范围获取name对应的有序集合的元素
+# zrangebyscore(name, min, max, start=None, num=None, withscores=False, score_cast_func=float)
+# 从大到小排序
+# zrevrangebyscore(name, max, min, start=None, num=None, withscores=False, score_cast_func=float)
+</code></pre><p>zrank(name, value)</p>
+<pre><code># 获取某个值在 name对应的有序集合中的排行（从 0 开始）
+# 更多：
+# zrevrank(name, value)，从大到小排序
+</code></pre><p>zrangebylex(name, min, max, start=None, num=None)</p>
+<pre><code># 当有序集合的所有成员都具有相同的分值时，有序集合的元素会根据成员的 值 （lexicographical ordering）来进行排序，而这个命令则可以返回给定的有序集合键 key 中， 元素的值介于 min 和 max 之间的成员
+# 对集合中的每个成员进行逐个字节的对比（byte-by-byte compare）， 并按照从低到高的顺序， 返回排序后的集合成员。 如果两个字符串有一部分内容是相同的话， 那么命令会认为较长的字符串比较短的字符串要大
+# 参数：
+# name，redis的name
+# min，左区间（值）。 + 表示正无限； - 表示负无限； ( 表示开区间； [ 则表示闭区间
+# min，右区间（值）
+# start，对结果进行分片处理，索引位置
+# num，对结果进行分片处理，索引后面的num个元素
+
+# 如：
+# ZADD myzset 0 aa 0 ba 0 ca 0 da 0 ea 0 fa 0 ga
+# r.zrangebylex(&apos;myzset&apos;, &quot;-&quot;, &quot;[ca&quot;) 结果为：[&apos;aa&apos;, &apos;ba&apos;, &apos;ca&apos;]
+
+# 更多：
+# 从大到小排序
+# zrevrangebylex(name, max, min, start=None, num=None)
+</code></pre><p>zrem(name, values)</p>
+<pre><code># 删除name对应的有序集合中值是values的成员
+# 如：zrem(&apos;zz&apos;, [&apos;s1&apos;, &apos;s2&apos;])
+</code></pre><p>zremrangebyrank(name, min, max)   # 根据排行范围删除<br>zremrangebyscore(name, min, max)   # 根据分数范围删除<br>zremrangebylex(name, min, max)    # 根据值返回删除<br>zscore(name, value)     # 获取name对应有序集合中 value 对应的分数<br>zinterstore(dest, keys, aggregate=None)</p>
+<pre><code># 获取两个有序集合的交集，如果遇到相同值不同分数，则按照aggregate进行操作
+# aggregate的值为:  SUM  MIN  MAX
+</code></pre><p>zunionstore(dest, keys, aggregate=None)</p>
+<pre><code># 获取两个有序集合的并集，如果遇到相同值不同分数，则按照aggregate进行操作
+# aggregate的值为:  SUM  MIN  MAX
+</code></pre><p>zscan(name, cursor=0, match=None, count=None, score_cast_func=float)<br>zscan_iter(name, match=None, count=None,score_cast_func=float)</p>
+<pre><code># 同字符串相似，相较于字符串新增score_cast_func，用来对分数进行操作
+</code></pre><p>其他常用操作</p>
+<p>delete(<em>names)  # 根据删除redis中的任意数据类型<br>exists(name)    # 检测redis的name是否存在<br>keys(pattern=’</em>‘)</p>
+<pre><code># 根据模型获取redis的name
+# 更多：
+# KEYS * 匹配数据库中所有 key 。
+# KEYS h?llo 匹配 hello ， hallo 和 hxllo 等。
+# KEYS h*llo 匹配 hllo 和 heeeeello 等。
+# KEYS h[ae]llo 匹配 hello 和 hallo ，但不匹配 hillo
+</code></pre><p>expire(name ,time)   # 为某个redis的某个name设置超时时间<br>rename(src, dst)    # 对redis的name重命名为<br>move(name, db)    # 将redis的某个值移动到指定的db下<br>randomkey()    # 随机获取一个redis的name（不删除）<br>type(name）     # 获取name对应值的类型<br>scan(cursor=0, match=None, count=None)<br>scan_iter(match=None, count=None)</p>
+<pre><code># 同字符串操作，用于增量迭代获取key   
+</code></pre><p></p><h3>4、管道</h3><br>redis-py默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接操作，如果想要在一次请求中指定多个命令，则可以使用pipline实现一次请求指定多个命令，并且默认情况下一次pipline 是原子性操作。<p></p>
+<pre><code>import redis
+pool = redis.ConnectionPool(host=&apos;127.0.0.1&apos;, port=6379)
+r = redis.Redis(connection_pool=pool)
+# pipe = r.pipeline(transaction=False)
+pipe = r.pipeline(transaction=True)    
+pipe.set(&apos;name&apos;, &apos;haha&apos;)
+pipe.set(&apos;role&apos;, &apos;sb&apos;)
+</code></pre></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag">#redis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/24/聊聊python-PEP8/" rel="prev">聊聊python PEP8</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/20/Centos7-安装redis/" rel="next">Centos7 安装redis</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div>
+      
+        <style type="text/css">
+
+    .donate_bar {
+        text-align: center;
+        margin-top : 5%;
+    }
+
+    .donate_bar.hidden {
+        display:none;
+    }
+/*
+    .donate_bar a.btn_donate {
+        display: inline-block;
+        width: 82px;
+        height: 82px;
+        margin-left:auto;
+        margin-right:auto;
+
+        background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat;
+        _background: url("http://img.t.sinajs.cn/t5/style/images/apps_PRF/e_media/btn_reward.gif") no-repeat; 
+
+        -webkit-transition: background 0s;
+        -moz-transition: background 0s;
+        -o-transition: background 0s;
+        -ms-transition: background 0s;
+        transition: background 0s;
+    }
+*/
+    .donate_bar a.btn_donate:hover { 
+        // background-position: 0px -82px;
+        color: #87daff;
+    }
+
+    .donate_bar .donate_txt {
+        display: block;
+        color: #9d9d9d;
+        font: 14px/2 "Microsoft Yahei";
+    }
+
+    .bold { 
+        font-weight: bold; 
+    }
+
+    .post-donate a {
+        border-bottom: 0px;
+    }
+
+    #donate_guide table {
+        border: none;
+    }
+
+    #donate_guide td {
+        border-bottom: none;
+        border-right: none;
+        // background: #333333;
+        valign: top;
+    }
+
+</style>
+
+
+
+      
+    </div>
+
+    <div class="post-spread">
+      
+        <div class="bdsharebuttonbox">
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Mona" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Mona</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        <div class="links-of-friendly motion-element">
+          
+        </div>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">redis 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">redis的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">redis相比memcached有哪些优势?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text"> Memcache与Redis的区别都有哪些？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.4.</span> <span class="nav-text">redis常见性能问题和解决方案：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.5.</span> <span class="nav-text">MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.6.</span> <span class="nav-text">redis 最适合的场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">Python操作Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">1、操作模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.</span> <span class="nav-text">2、连接池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.3.</span> <span class="nav-text">3、操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.4.</span> <span class="nav-text">4、管道</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018
+  </span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mona
+  </span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme by <a class="theme-link" href="http://blog.idhyt.com">idhyt</a>.<a class="theme-link" href="https://github.com/idhyt/hexo-theme-next/tree/magiclamp">Mala</a>
+</div>
+
+<!-- busuanzi -->
+
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
