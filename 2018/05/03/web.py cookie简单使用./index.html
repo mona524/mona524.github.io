@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="web.py," />
+  <meta name="keywords" content="js,web.py," />
 
 
 
@@ -35,18 +35,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="一、简单URL规则： import web urls = (     &amp;apos;/index&amp;apos;,&amp;apos;Index&amp;apos;,     &amp;apos;/hello/\d+&amp;apos;, &amp;apos;Hello&amp;apos;,     &amp">
-<meta name="keywords" content="web.py">
+<meta name="description" content="前端ajax 必须加上：crossDomain: true和xhrFields: {withCredentials: true},通过对Credentials参数的设置，就可以保持跨域Ajax时传递的Cookie后端代码必须加上： web.header(&amp;apos;content-type&amp;apos;,">
+<meta name="keywords" content="js,web.py">
 <meta property="og:type" content="article">
-<meta property="og:title" content="web.py url路由配置和分发">
-<meta property="og:url" content="http://yoursite.com/2018/04/28/web.py url路由配置和分发/index.html">
+<meta property="og:title" content="web.py ajax跨域传递cookie">
+<meta property="og:url" content="http://yoursite.com/2018/05/03/web.py cookie简单使用./index.html">
 <meta property="og:site_name" content="Mona">
-<meta property="og:description" content="一、简单URL规则： import web urls = (     &amp;apos;/index&amp;apos;,&amp;apos;Index&amp;apos;,     &amp;apos;/hello/\d+&amp;apos;, &amp;apos;Hello&amp;apos;,     &amp;apos;/hey/(.*)&amp;apos;,&amp;apos;Hey&amp;apos;, ) class Index:     def GET(self):">
+<meta property="og:description" content="前端ajax 必须加上：crossDomain: true和xhrFields: {withCredentials: true},通过对Credentials参数的设置，就可以保持跨域Ajax时传递的Cookie后端代码必须加上： web.header(&amp;apos;content-type&amp;apos;, &amp;apos;text/json&amp;apos;) web.header(&amp;quot;Access-">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-28T09:46:34.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2.png">
+<meta property="og:image" content="http://yoursite.com/images/3.png">
+<meta property="og:image" content="http://yoursite.com/images/4.png">
+<meta property="og:updated_time" content="2018-05-03T03:15:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="web.py url路由配置和分发">
-<meta name="twitter:description" content="一、简单URL规则： import web urls = (     &amp;apos;/index&amp;apos;,&amp;apos;Index&amp;apos;,     &amp;apos;/hello/\d+&amp;apos;, &amp;apos;Hello&amp;apos;,     &amp;apos;/hey/(.*)&amp;apos;,&amp;apos;Hey&amp;apos;, ) class Index:     def GET(self):">
+<meta name="twitter:title" content="web.py ajax跨域传递cookie">
+<meta name="twitter:description" content="前端ajax 必须加上：crossDomain: true和xhrFields: {withCredentials: true},通过对Credentials参数的设置，就可以保持跨域Ajax时传递的Cookie后端代码必须加上： web.header(&amp;apos;content-type&amp;apos;, &amp;apos;text/json&amp;apos;) web.header(&amp;quot;Access-">
+<meta name="twitter:image" content="http://yoursite.com/images/2.png">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +60,7 @@
   };
 </script>
 
-  <title> web.py url路由配置和分发 | Mona </title>
+  <title> web.py ajax跨域传递cookie | Mona </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +177,7 @@
           
           
             
-              web.py url路由配置和分发
+              web.py ajax跨域传递cookie
             
           
         </h1>
@@ -182,8 +186,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2018-04-28T17:46:34+08:00" content="2018-04-28">
-            2018-04-28
+          <time itemprop="dateCreated" datetime="2018-05-03T11:15:10+08:00" content="2018-05-03">
+            2018-05-03
           </time>
         </span>
 
@@ -192,8 +196,8 @@
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/Python/" itemprop="url" rel="index">
-                  <span itemprop="name">python</span>
+                <a href="/categories/python-前端/" itemprop="url" rel="index">
+                  <span itemprop="name">python,前端</span>
                 </a>
               </span>
 
@@ -216,80 +220,100 @@
       
 
       
-        <span itemprop="articleBody"><p>一、简单URL规则：</p>
-<pre><code>import web
-urls = (
-    &apos;/index&apos;,&apos;Index&apos;,
-    &apos;/hello/\d+&apos;, &apos;Hello&apos;,
-    &apos;/hey/(.*)&apos;,&apos;Hey&apos;,
-)
-class Index:
-    def GET(self):
-        return &quot;index page&quot;
-class Hello:
-    def GET(self):
-        return &apos;hello world&apos;
-class Hey:
-    def GET(self,args):
-        return &apos;hey&apos;+ args
-if __name__ == &quot;__main__&quot;:
-    app = web.application(urls, globals())
-    app.run()
-</code></pre><p>1、URL完全匹配<code>/index</code>  访问路径<code>http://127.0.0.1:8080/index</code> 处理函数<code>Index</code></p>
-<p>2、URL模糊匹配 <code>/hello/\d+</code> 访问路径 <code>http://127.0.0.1:8080/hello/9</code> 处理函数<code>Hello</code></p>
-<p>3、URL带组匹配 <code>hey/(.*)</code> 访问路径<code>http://127.0.0.1:8080/hey/mona</code> 处理函数<code>Hey</code></p>
-<p>二、路由分发：<br>当路由较多时，可以将URL单独写一个文件，取名<code>urls.py</code>,然后在<code>index.py</code>中引用</p>
-<p>index.py 文件，记住一定要导入处理函数和URL</p>
-<pre><code>import web
-from urls import mona_url
-from login import Login
-from login import Hello
-from login import Hey
-from login import Index
-if __name__ == &quot;__main__&quot;:
-    app = web.application(mona_url, globals())
-    app.run()
-</code></pre><p>urls.py 文件</p>
+        <span itemprop="articleBody"><p>前端ajax 必须加上：<code>crossDomain: true</code>和<code>xhrFields: {withCredentials: true}</code>,通过对Credentials参数的设置，就可以保持跨域Ajax时传递的Cookie<br>后端代码必须加上：</p>
+<pre><code>web.header(&apos;content-type&apos;, &apos;text/json&apos;)
+web.header(&quot;Access-Control-Allow-Origin&quot;, &quot;http://localhost:63342&quot;)
+web.header(&quot;Access-Control-Allow-Credentials&quot;, &quot;true&quot;)
+</code></pre><p>Access-Control-Allow-Origin是你访问后端的IP</p>
+<p>完整的示例如下：第一次访问index，没有cookie，跳转到login页面，第二次带了cookie就可以直接访问index页面<br>后端：</p>
 <pre><code># !/usr/bin/env python
 # -*- coding:utf-8 -*- 
 # Author: mona
-# time: 2018/4/28
-mona_url = (
-    &apos;/index&apos;, &apos;Index&apos;,
-    &apos;/hello/\d+&apos;, &apos;Hello&apos;,
-    &apos;/hey/(.*)&apos;, &apos;Hey&apos;,
-    &apos;/login&apos;,&apos;Login&apos;,
-)
-</code></pre><p>login.py 文件</p>
-<pre><code># !/usr/bin/env python
-# -*- coding:utf-8 -*- 
-# Author: mona
-# time: 2018/4/28
+# time: 2018/5/3
+import web 
+url = (
+    &apos;/login/(.*)&apos;,&apos;Login&apos;,
+    &apos;/index&apos;,&apos;Index&apos;
+)    
 class Login:
-    def GET(self):
-        return &quot;login page&quot;
+
+def GET(self,name):
+    web.header(&apos;content-type&apos;, &apos;text/json&apos;)
+    web.header(&quot;Access-Control-Allow-Origin&quot;, &quot;http://localhost:63342&quot;)
+    web.header(&quot;Access-Control-Allow-Credentials&quot;, &quot;true&quot;)
+    name1 = &apos;mona&apos;
+    web.setcookie(&apos;name&apos;,name1,20)
+    return &quot;login page&quot;
+
 class Index:
     def GET(self):
-        return &quot;index page&quot;
-class Hello:
-    def GET(self):
-        return &apos;hello world&apos;
-class Hey:
-    def GET(self,args):
-        return &apos;hey&apos;+ args
-</code></pre><p>三、两个或多个参数的URL<br>url 配置<code>&#39;/hey/(.*)/(.*)&#39;, &#39;Hey&#39;,</code> </p>
-<p>处理函数：</p>
-<pre><code>class Hey:
-def GET(self,args,name):
-    return &apos;hey&apos;+ args+name
-</code></pre><p>简单总结：</p>
-<ul><br><li>在web.py中，url后有无”/“是不一样的</li><br><li>静态文件不需要写映射，只需要放在static目录中</li><br><li>使用web.seeother和web.redirect完成跳转。前者更加友好，返回303状态码，而后者返回301</li><br><li>返回xml或者json等格式数据时，需要在web.header中设置数据的格式</li><br><li>通过web.input/web.data获取url请求参数</li><br></ul></span>
+        web.header(&apos;content-type&apos;, &apos;text/json&apos;)
+        web.header(&quot;Access-Control-Allow-Origin&quot;, &quot;http://localhost:63342&quot;)
+        web.header(&quot;Access-Control-Allow-Credentials&quot;, &quot;true&quot;)
+        cookie = web.cookies().get(&apos;name&apos;)
+        print cookie
+        if cookie:
+            return &quot;index page&quot;
+        else:
+            raise web.seeother(&apos;/login/(.*)&apos;)
+if __name__ == &quot;__main__&quot;:
+    app = web.application(url, globals())
+    app.run()
+</code></pre><p>前端：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;script src=&quot;jquery-3.2.1.js&quot;&gt;&lt;/script&gt; 
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div onclick=&quot;getindex()&quot;&gt;点击1&lt;/div&gt;
+&lt;div onclick=&quot;getaffair()&quot;&gt;点击4&lt;/div&gt; 
+&lt;/body&gt;
+&lt;script&gt;
+    function getindex() {
+        $.ajax({
+                url: &quot;http://localhost:8070/login/mona&quot;,
+                type: &quot;GET&quot;,
+                dataType: &quot;JSON&quot;,
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                    },
+                success: function (data) {
+                    var cookie = document.cookie;
+                    console.log(cookie,111);
+                }
+});
+
+}
+function getaffair() {
+    $.ajax({
+            url: &quot;http://localhost:8070/index&quot;,
+            type: &quot;GET&quot;,
+            dataType: &quot;JSON&quot;,
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+                },
+            success: function (data) {
+                console.log(data);
+            }
+});
+    }  
+&lt;/script&gt;
+&lt;/html&gt;
+</code></pre><p>浏览器里的可以看见cookie信息：<br>第一次点击4时，没有cookie，直接跳到login路由<br><img src="/images/2.png" alt=""><br>点击点击1时，设置了cookie<br><img src="/images/3.png" alt=""><br>再次点击4时，可以看见请求头里带里cookie<br><img src="/images/4.png" alt=""></p>
+</span>
       
     </div>
 
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag">#js</a>
           
             <a href="/tags/web-py/" rel="tag">#web.py</a>
           
@@ -300,13 +324,11 @@ def GET(self,args,name):
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/28/python虚拟环境的搭建/" rel="prev">python虚拟环境的搭建</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/24/聊聊python-PEP8/" rel="next">聊聊python PEP8</a>
+              <a href="/2018/04/28/python虚拟环境的搭建/" rel="next">python虚拟环境的搭建</a>
             
           </div>
         </div>
