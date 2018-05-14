@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="虚拟环境," />
+  <meta name="keywords" content="webservice," />
 
 
 
@@ -35,18 +35,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="在实际开发的中，可能会需要不同的python环境进行开发，所以虚拟环境就提供了很好的空间。 安装virtualenv  pip3 install virtualenv 创建环境并激活  mkdir 虚拟环境  cd 虚拟环境 virtualenv --no-site-packages venv #创建环境 source">
-<meta name="keywords" content="虚拟环境">
+<meta name="description" content="一、webservice 是什么？ 1、W3C组织对其的定义如下，它是一个软件系统，为了支持跨网络的机器间相互操作交互而设计。Web Service服务通常被定义为一组模块化的API，它们可以通过网络进行调用，来执行远程系统的请求服务。 2、简单来说：WebService即Web服务，它是一种跨编程语言和跨操作系统平台">
+<meta name="keywords" content="webservice">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python虚拟环境的搭建">
-<meta property="og:url" content="http://yoursite.com/2017/11/20/python虚拟环境的搭建/index.html">
+<meta property="og:title" content="python webservice Soap接口">
+<meta property="og:url" content="http://yoursite.com/2018/05/14/python webserive SOAP接口./index.html">
 <meta property="og:site_name" content="Mona">
-<meta property="og:description" content="在实际开发的中，可能会需要不同的python环境进行开发，所以虚拟环境就提供了很好的空间。 安装virtualenv  pip3 install virtualenv 创建环境并激活  mkdir 虚拟环境  cd 虚拟环境 virtualenv --no-site-packages venv #创建环境 source venv/bin/activate #激活环境 deactivate #结束虚">
+<meta property="og:description" content="一、webservice 是什么？ 1、W3C组织对其的定义如下，它是一个软件系统，为了支持跨网络的机器间相互操作交互而设计。Web Service服务通常被定义为一组模块化的API，它们可以通过网络进行调用，来执行远程系统的请求服务。 2、简单来说：WebService即Web服务，它是一种跨编程语言和跨操作系统平台的远程调用技术。 3、WebService三要素： SOAP (Simple O">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-20T05:01:59.000Z">
+<meta property="og:updated_time" content="2018-05-14T06:28:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python虚拟环境的搭建">
-<meta name="twitter:description" content="在实际开发的中，可能会需要不同的python环境进行开发，所以虚拟环境就提供了很好的空间。 安装virtualenv  pip3 install virtualenv 创建环境并激活  mkdir 虚拟环境  cd 虚拟环境 virtualenv --no-site-packages venv #创建环境 source venv/bin/activate #激活环境 deactivate #结束虚">
+<meta name="twitter:title" content="python webservice Soap接口">
+<meta name="twitter:description" content="一、webservice 是什么？ 1、W3C组织对其的定义如下，它是一个软件系统，为了支持跨网络的机器间相互操作交互而设计。Web Service服务通常被定义为一组模块化的API，它们可以通过网络进行调用，来执行远程系统的请求服务。 2、简单来说：WebService即Web服务，它是一种跨编程语言和跨操作系统平台的远程调用技术。 3、WebService三要素： SOAP (Simple O">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title> python虚拟环境的搭建 | Mona </title>
+  <title> python webservice Soap接口 | Mona </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +173,7 @@
           
           
             
-              python虚拟环境的搭建
+              python webservice Soap接口
             
           
         </h1>
@@ -182,8 +182,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2017-11-20T12:44:08+08:00" content="2017-11-20">
-            2017-11-20
+          <time itemprop="dateCreated" datetime="2018-05-14T14:28:11+08:00" content="2018-05-14">
+            2018-05-14
           </time>
         </span>
 
@@ -216,19 +216,28 @@
       
 
       
-        <span itemprop="articleBody"><p>在实际开发的中，可能会需要不同的python环境进行开发，所以虚拟环境就提供了很好的空间。</p>
-<h2>安装virtualenv</h2>
+        <span itemprop="articleBody"><p>一、webservice 是什么？</p>
+<p>1、W3C组织对其的定义如下，它是一个软件系统，为了支持跨网络的机器间相互操作交互而设计。<br>Web Service服务通常被定义为一组模块化的API，它们可以通过网络进行调用，来执行远程系统的请求服务。</p>
+<p>2、简单来说：WebService即Web服务，它是一种跨编程语言和跨操作系统平台的远程调用技术。</p>
+<p>3、WebService三要素：</p>
+<pre><code>SOAP (Simple Object Access Protocol)：简易对象访问协议，soap用来描述传递信息的格式。
+WSDL (WebServices Description Language)：Web服务描述语言，用来描述如何访问具体的接口。
+UDDI (Universal Description Discovery and Integration)：通用描述、发现及整合，用来管理、分发、查询webService。
+</code></pre><p>二、SOAP 协议：</p>
+<p>1、SOAP，Simple Object Access Protocol，简单对象访问协议，简单的说就是用于访问网络服务的协议；它是基于 XML 的简易协议，可使应用程序在 HTTP 之上进行信息交换。</p>
+<p>2、SOAP是一种网络通信协议，用于网络上、不同平台、不同语言的应用程序间的通讯。</p>
+<p> WebService通过HTTP协议发送请求和接收结果时，发送的请求内容和结果内容都采用XML格式封装，并增加了一些特定的HTTP消息头，以说明HTTP消息的内容格式，这些特定的HTTP消息头和XML内容格式就是SOAP协议。</p>
+<p> SOAP提供了标准的RPC方法来调用Web Service。</p>
+<p> SOAP协议 = HTTP协议 + XML数据格式。</p>
+<p> SOAP协议定义了SOAP消息的格式，SOAP协议是基于HTTP协议的，SOAP也是基于XML和XSD的，XML是SOAP的数据编码方式。</p>
+<p> SOAP很就简单并可扩展支持面向对象，允许跨防火墙。</p>
+<p> SOAP被作为 W3C 标准来发展。</p>
+<p>三：REST和SOAP区别</p>
+<p>1、REST简单介绍：</p>
+<p>REST并不是一种协议，只是一种设计规范，该设计规范要求程序遵守HTTP协议最初设计的初衷，使用HTTP的GET/PUT/DELTET/POST对资源进行操作，REST接口是以URI资源为基础，对资源进行CRUD操作的接口。</p>
+<p>2、SOAP和REST的对比：</p>
+<ul><br><li>SOAP接口是自解释的，采用WSDL进行描述，程序可以基于WSDL进行解释并自动生成SOAP调用代码；REST接口只能通过接口文档进行描述，难以做到程序解释接口定义。<br></li><br><li>SOAP采用HTTP作为传输层协议，对HTTP协议来说服务调用是透明的，防火墙上难以对SOAP进行细粒度的权限控制，也难以使用http的缓存机制提高效率。而REST是标准的HTTP访问，可以充分利用HTTP协议提供的一些好处，例如可以在防火墙上较好地进行权限控制（最小粒度可以基于每个URL的CRUD操作），也可以充分利用缓存提高响应速度和系统的吞吐效率。<br></li><br><li>由于REST是标准的HTTP访问，其适用性更广，web应用，移动应用都可以在不使用第三方库的情况下方便地使用REST接口构造应用程序。<br></li><br><li>对于移动程序而言，由于REST的有效负荷占比高于SOAP的XML封装，采用REST接口可以降低程序使用的带宽。<br></li><br><li>根据REST设计原则，接口是无状态的，因此可以简单地通过对服务器进行水平扩展提升服务能力。<br></li><br></ul>
 
-<pre><code>pip3 install virtualenv
-</code></pre><h2>创建环境并激活</h2>
-
-<pre><code>mkdir 虚拟环境 
-cd 虚拟环境
-virtualenv --no-site-packages venv #创建环境
-source venv/bin/activate #激活环境
-deactivate #结束虚拟环境
-</code></pre><p>注意到命令提示符变了，有个(venv)前缀，表示当前环境是一个名为venv的Python环境。</p>
-<p></p><h2>在pycharm上安装和使用</h2><br>打开pycharm—setting,project—-interpreter 添加虚拟环境解释器<br>添加名字，选择路径，确定就OK啦。<p></p>
 </span>
       
     </div>
@@ -237,7 +246,7 @@ deactivate #结束虚拟环境
       
         <div class="post-tags">
           
-            <a href="/tags/虚拟环境/" rel="tag">#虚拟环境</a>
+            <a href="/tags/webservice/" rel="tag">#webservice</a>
           
         </div>
       
@@ -246,13 +255,11 @@ deactivate #结束虚拟环境
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/20/django-restframework/" rel="prev">django---restframework</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/17/vue脚手架安装和启动/" rel="next">vue脚手架安装和启动</a>
+              <a href="/2018/05/03/web.py cookie简单使用./" rel="next">web.py ajax跨域传递cookie</a>
             
           </div>
         </div>
@@ -393,21 +400,21 @@ deactivate #结束虚拟环境
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -435,7 +442,7 @@ deactivate #结束虚拟环境
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">安装virtualenv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">创建环境并激活</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">在pycharm上安装和使用</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
