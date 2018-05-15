@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="webservice," />
+  <meta name="keywords" content="webservice,suds," />
 
 
 
@@ -35,18 +35,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="模块官网链接 http://spyne.io/docs/2.10/index.html         官网有完整的示例，在此不再赘述。 输入输出协议示例参照：http://spyne.io/#inprot=HttpRpc&amp;amp;outprot=JsonDocument&amp;amp;s=rpc&amp;a">
-<meta name="keywords" content="webservice">
+<meta name="description" content="Type not found: ‘(string, http://schemas.xmlsoap.org/soap/encoding/, )  有些wsdl没有定义schema，别的语言的库可能会自动修补这个问题，但是suds不会。当你的程序出现类似上述错误时，极有可能就是碰到这种问题。解决方案： from suds.">
+<meta name="keywords" content="webservice,suds">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python webservice Soap接口之spyne">
-<meta property="og:url" content="http://yoursite.com/2018/05/14/python webservice soap 接口之spyne./index.html">
+<meta property="og:title" content="suds调用webservice接口常见错误解决方案">
+<meta property="og:url" content="http://yoursite.com/2018/05/15/suds调用webservice 常见错误解决方案./index.html">
 <meta property="og:site_name" content="Mona">
-<meta property="og:description" content="模块官网链接 http://spyne.io/docs/2.10/index.html         官网有完整的示例，在此不再赘述。 输入输出协议示例参照：http://spyne.io/#inprot=HttpRpc&amp;amp;outprot=JsonDocument&amp;amp;s=rpc&amp;amp;tpt=WsgiApplication&amp;amp;validator=true 测试工具：SOAPU">
+<meta property="og:description" content="Type not found: ‘(string, http://schemas.xmlsoap.org/soap/encoding/, )  有些wsdl没有定义schema，别的语言的库可能会自动修补这个问题，但是suds不会。当你的程序出现类似上述错误时，极有可能就是碰到这种问题。解决方案： from suds.xsd.doctor import ImportDoctor, Import f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-14T06:55:14.000Z">
+<meta property="og:updated_time" content="2018-05-15T06:41:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python webservice Soap接口之spyne">
-<meta name="twitter:description" content="模块官网链接 http://spyne.io/docs/2.10/index.html         官网有完整的示例，在此不再赘述。 输入输出协议示例参照：http://spyne.io/#inprot=HttpRpc&amp;amp;outprot=JsonDocument&amp;amp;s=rpc&amp;amp;tpt=WsgiApplication&amp;amp;validator=true 测试工具：SOAPU">
+<meta name="twitter:title" content="suds调用webservice接口常见错误解决方案">
+<meta name="twitter:description" content="Type not found: ‘(string, http://schemas.xmlsoap.org/soap/encoding/, )  有些wsdl没有定义schema，别的语言的库可能会自动修补这个问题，但是suds不会。当你的程序出现类似上述错误时，极有可能就是碰到这种问题。解决方案： from suds.xsd.doctor import ImportDoctor, Import f">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title> python webservice Soap接口之spyne | Mona </title>
+  <title> suds调用webservice接口常见错误解决方案 | Mona </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +173,7 @@
           
           
             
-              python webservice Soap接口之spyne
+              suds调用webservice接口常见错误解决方案
             
           
         </h1>
@@ -182,8 +182,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2018-05-14T14:55:14+08:00" content="2018-05-14">
-            2018-05-14
+          <time itemprop="dateCreated" datetime="2018-05-15T14:41:01+08:00" content="2018-05-15">
+            2018-05-15
           </time>
         </span>
 
@@ -216,13 +216,25 @@
       
 
       
-        <span itemprop="articleBody"><p>模块官网链接 <a href="http://spyne.io/docs/2.10/index.html" target="_blank" rel="noopener">http://spyne.io/docs/2.10/index.html</a>        </p>
-<p>官网有完整的示例，在此不再赘述。</p>
-<p>输入输出协议示例参照：<a href="http://spyne.io/#inprot=HttpRpc&amp;outprot=JsonDocument&amp;s=rpc&amp;tpt=WsgiApplication&amp;validator=true" target="_blank" rel="noopener">http://spyne.io/#inprot=HttpRpc&amp;outprot=JsonDocument&amp;s=rpc&amp;tpt=WsgiApplication&amp;validator=true</a></p>
-<p>测试工具：SOAPUI</p>
-<p>客户端链接模块：suds</p>
-<p>ps:如果安装报错，请更换pipy源</p>
-</span>
+        <span itemprop="articleBody"><p2>Type not found: ‘(string, <a href="http://schemas.xmlsoap.org/soap/encoding/" target="_blank" rel="noopener">http://schemas.xmlsoap.org/soap/encoding/</a>, )</p2>
+
+<p>有些wsdl没有定义schema，别的语言的库可能会自动修补这个问题，但是suds不会。当你的程序出现类似上述错误时，极有可能就是碰到这种问题。<br>解决方案：</p>
+<pre><code>from suds.xsd.doctor import ImportDoctor, Import
+from suds.client import Client
+imp = Import(&apos;http://schemas.xmlsoap.org/soap/encoding/&apos;)
+doc = ImportDoctor(imp)
+url = &apos;你的wsdl url地址放在这里&apos;
+c = Client(url, doctor=doc)
+</code></pre><p2>suds.TypeNotFound: Type not found: ‘(schema, <a href="http://www.w3.org/2001/XMLSchema" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema</a>, )’</p2>
+
+<p> 这种错误时是缺失标准到soap schema，倒入schema就好了。</p>
+<pre><code>from suds.xsd.doctor import ImportDoctor, Import
+url = &apos;http://somedomain.com/filename.php?wsdl&apos;
+imp = Import(&apos;http://schemas.xmlsoap.org/soap/encoding/&apos;)
+imp.filter.add(&apos;http://some/namespace/A&apos;)
+doctor = ImportDoctor(imp)
+client = Client(url, doctor=doctor)
+</code></pre></span>
       
     </div>
 
@@ -232,6 +244,8 @@
           
             <a href="/tags/webservice/" rel="tag">#webservice</a>
           
+            <a href="/tags/suds/" rel="tag">#suds</a>
+          
         </div>
       
 
@@ -239,13 +253,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/14/pipy国内镜像源./" rel="prev">pypi国内镜像源</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/14/python webserive SOAP接口./" rel="next">python webservice Soap接口</a>
+              <a href="/2018/05/14/pipy国内镜像源./" rel="next">pypi国内镜像源</a>
             
           </div>
         </div>
