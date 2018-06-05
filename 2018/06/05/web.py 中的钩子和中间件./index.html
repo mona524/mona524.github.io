@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="database," />
+  <meta name="keywords" content="web.py," />
 
 
 
@@ -35,18 +35,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="step1 安装服务端：  获取并安装rpm包： wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm      yum localinstall mysql57-community-release-el7-8.noarch.r">
-<meta name="keywords" content="database">
+<meta name="description" content="钩子的用法1、带处理器的钩子：    def my_processor(handler):    print ‘before handling’    result = handler()    print ‘after handling’    return result    app.add_processor(m">
+<meta name="keywords" content="web.py">
 <meta property="og:type" content="article">
-<meta property="og:title" content="centos7安装mysql">
-<meta property="og:url" content="http://yoursite.com/2017/11/17/centos7安装mysql/index.html">
+<meta property="og:title" content="web.py 中的钩子和中间件">
+<meta property="og:url" content="http://yoursite.com/2018/06/05/web.py 中的钩子和中间件./index.html">
 <meta property="og:site_name" content="Mona">
-<meta property="og:description" content="step1 安装服务端：  获取并安装rpm包： wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm      yum localinstall mysql57-community-release-el7-8.noarch.rpm  安装：yum localinstall mysql57-communit">
+<meta property="og:description" content="钩子的用法1、带处理器的钩子：    def my_processor(handler):    print ‘before handling’    result = handler()    print ‘after handling’    return result    app.add_processor(my_processor)带处理器的钩子可以对http请求进行操作，可以根据条件结">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-17T07:08:33.000Z">
+<meta property="og:updated_time" content="2018-06-05T08:47:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="centos7安装mysql">
-<meta name="twitter:description" content="step1 安装服务端：  获取并安装rpm包： wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm      yum localinstall mysql57-community-release-el7-8.noarch.rpm  安装：yum localinstall mysql57-communit">
+<meta name="twitter:title" content="web.py 中的钩子和中间件">
+<meta name="twitter:description" content="钩子的用法1、带处理器的钩子：    def my_processor(handler):    print ‘before handling’    result = handler()    print ‘after handling’    return result    app.add_processor(my_processor)带处理器的钩子可以对http请求进行操作，可以根据条件结">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title> centos7安装mysql | Mona </title>
+  <title> web.py 中的钩子和中间件 | Mona </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +173,7 @@
           
           
             
-              centos7安装mysql
+              web.py 中的钩子和中间件
             
           
         </h1>
@@ -182,8 +182,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2017-11-17T14:45:37+08:00" content="2017-11-17">
-            2017-11-17
+          <time itemprop="dateCreated" datetime="2018-06-05T16:47:27+08:00" content="2018-06-05">
+            2018-06-05
           </time>
         </span>
 
@@ -192,8 +192,8 @@
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/database/" itemprop="url" rel="index">
-                  <span itemprop="name">database</span>
+                <a href="/categories/Python/" itemprop="url" rel="index">
+                  <span itemprop="name">python</span>
                 </a>
               </span>
 
@@ -216,34 +216,37 @@
       
 
       
-        <span itemprop="articleBody"><h3>step1 安装服务端：</h3>
+        <span itemprop="articleBody"><h3>钩子的用法</h3><br>1、带处理器的钩子：<br><br>    def my_processor(handler):<br>    print ‘before handling’<br>    result = handler()<br>    print ‘after handling’<br>    return result<br>    app.add_processor(my_processor)<br><br>带处理器的钩子可以对http请求进行操作，可以根据条件结束请求，返回错误信息。<br><br>2、未带处理器的钩子：<br><br>    def my_loadhook():<br>        print “my load hook”<br>        web.header(‘Content-type’, “text/html; charset=utf-8”)<br><br>    def my_unloadhook():<br>        print “my unload hook”<br><br>    app.add_processor(web.loadhook(my_loadhook))<br>    app.add_processor(web.unloadhook(my_unloadhook))<br>未带处理器的钩子不能对http请求进行操作，但是可以修改全局变量。而且在钩子中可以对 web.ctx 和 web.input() 进行操作。<br><br><h3>中间件</h3>
 
-<p>获取并安装rpm包：</p>
-<pre><code>wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm     
-yum localinstall mysql57-community-release-el7-8.noarch.rpm 
-</code></pre><p>安装：<code>yum localinstall mysql57-community-release-el7-8.noarch.rpm</code></p>
-<h3>step2 安装客户端：</h3>
+<pre><code>def midd(app):
+    &quot;&quot;&quot;函数规则定义的中间件&quot;&quot;&quot;
+    def inapp(e, o):
+        print e
+        print o
+        print &apos;func befor handle&apos;
+        r = app(e, o)
+        print &apos;func after handle&apos;
+        return r
+    return inapp
 
-<p>安装：<code>yum install mysql</code></p>
-<h3>启动服务：</h3>
+class Midd(object):
+    &quot;&quot;&quot;class规则定义的中间件,
+    其实这就是一个函数,
+    传入参数时调用__init__,
+    然后返回self&quot;&quot;&quot;
+    def __init__(self, app):
+        self.app = app
+    def __call__(self, o, e):
+        print &apos;class befor handle&apos;
+        print o,1111
+        print e,2222
+        r = self.app(o, e)
+        print &apos;class after handle&apos;
+        return r
 
-<pre><code>service mysqld start
-mysql -u root -p
-</code></pre><p>然后报：</p>
-<pre><code>Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: NO)
-</code></pre><p>试了各种密码都不对，只能先跳过密码,切到root用户，打开配置文件，在任意地方添加<code>skip-grant-tables</code>：</p>
-<pre><code>vi ／ect/my.cnf
-skip-grant-tables
-</code></pre><p>然后重启服务并登录(输入密码时直接回车)：</p>
-<pre><code>service mysqld restart
-mysql -u root -p
-</code></pre><p>修改密码</p>
-<pre><code>use mysql
-update user set authentication_string=password(&apos;123&apos;) where user=&apos;root&apos;
-flush privileges;
-quit
-</code></pre><p>再次切回root用户，打开配置文件，删除<code>skip-grant-tables</code>,保存退出</p>
-<p>再使用修改后的密码登录就OK啦</p>
+ app.run(Midd)    #使用class中间件
+# app.run(midd)   #使用函数中间件
+</code></pre><p>中间件也可以在函数执行前和执行后进行批量操作。具体用法参照上述代码。</p>
 </span>
       
     </div>
@@ -252,7 +255,7 @@ quit
       
         <div class="post-tags">
           
-            <a href="/tags/database/" rel="tag">#database</a>
+            <a href="/tags/web-py/" rel="tag">#web.py</a>
           
         </div>
       
@@ -261,13 +264,11 @@ quit
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/17/vue脚手架安装和启动/" rel="prev">vue脚手架安装和启动</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/16/vue---axios基础/" rel="next">vue—axios基础</a>
+              <a href="/2018/06/04/python 读取ini配置文件./" rel="next">python 读取ini配置文件</a>
             
           </div>
         </div>
@@ -450,7 +451,7 @@ quit
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">step1 安装服务端：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">step2 安装客户端：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">启动服务：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">钩子的用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">中间件</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
