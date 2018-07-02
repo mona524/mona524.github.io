@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="js,面试题," />
+  <meta name="keywords" content="python,linux," />
 
 
 
@@ -35,18 +35,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象 function a(){     var user = &amp;quot;mona&amp;quot;;     console.log(this.user); //undefin">
-<meta name="keywords" content="js,面试题">
+<meta name="description" content="最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下： sceduler_example.py 测试文件 from apscheduler.schedulers.blocking import BlockingScheduler from datet">
+<meta name="keywords" content="python,linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js中的this到底是什么?">
-<meta property="og:url" content="http://yoursite.com/2017/11/20/js中的this到底是什么/index.html">
+<meta property="og:title" content="nohup 测试python 程序print无输出问题">
+<meta property="og:url" content="http://yoursite.com/2018/07/02/nohup 测试python 程序print无输出问题/index.html">
 <meta property="og:site_name" content="Mona">
-<meta property="og:description" content="this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象 function a(){     var user = &amp;quot;mona&amp;quot;;     console.log(this.user); //undefined     console.log(this); //Window } a();   #等同于">
+<meta property="og:description" content="最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下： sceduler_example.py 测试文件 from apscheduler.schedulers.blocking import BlockingScheduler from datetime import datetime sched = BlockingSche">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-20T08:28:05.000Z">
+<meta property="og:updated_time" content="2018-07-02T10:04:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js中的this到底是什么?">
-<meta name="twitter:description" content="this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象 function a(){     var user = &amp;quot;mona&amp;quot;;     console.log(this.user); //undefined     console.log(this); //Window } a();   #等同于">
+<meta name="twitter:title" content="nohup 测试python 程序print无输出问题">
+<meta name="twitter:description" content="最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下： sceduler_example.py 测试文件 from apscheduler.schedulers.blocking import BlockingScheduler from datetime import datetime sched = BlockingSche">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title> js中的this到底是什么? | Mona </title>
+  <title> nohup 测试python 程序print无输出问题 | Mona </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +173,7 @@
           
           
             
-              js中的this到底是什么?
+              nohup 测试python 程序print无输出问题
             
           
         </h1>
@@ -182,8 +182,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2017-11-20T15:12:58+08:00" content="2017-11-20">
-            2017-11-20
+          <time itemprop="dateCreated" datetime="2018-07-02T18:04:28+08:00" content="2018-07-02">
+            2018-07-02
           </time>
         </span>
 
@@ -192,8 +192,8 @@
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/Frond-End/" itemprop="url" rel="index">
-                  <span itemprop="name">前端</span>
+                <a href="/categories/Python/" itemprop="url" rel="index">
+                  <span itemprop="name">python</span>
                 </a>
               </span>
 
@@ -216,50 +216,22 @@
       
 
       
-        <span itemprop="articleBody"><p>this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象</p>
-<pre><code>function a(){
-    var user = &quot;mona&quot;;
-    console.log(this.user); //undefined
-    console.log(this); //Window
-}
-a();   #等同于 window.a();
-</code></pre><p>this最终指向的是调用它的对象，这里的函数a实际是被Window对象所点出来的。<br>例一：</p>
-<pre><code>function Func(){
-      this.name=&apos;mona&apos;; // this，代指obj
-  }
-  obj = new Func();
-  console.log(obj.name); //mona
-</code></pre><p>例二：</p>
-<pre><code>function Func(){
-      this.name=&apos;mona&apos;; // this，代指obj
-      this.show = function(){
-          console.log(this.name);   //this.指调用这个函数的obj  mona
-      }
-  }
-obj = new Func();
-obj.show()
-</code></pre><p>例三：</p>
-<pre><code>userInfo = {
-     name:&apos;mona&apos;,
-     age: 18,
-     show:function(){
-         console.log(this.name) //mona this指的是userinfo这个obj
-     }
-}       
-userInfo.show()
-</code></pre><p>例四：       </p>
-<pre><code>function Func(){
-    this.name=&apos;mona&apos;; // this，代指obj
-    this.show = function(){
-        console.log(this);  # obj
-        (function(){
-            console.log(this); # window,自执行函数没有调用者，即是默认的window
-        })()
-    }
-}
-obj = new Func();
-obj.show()
-</code></pre></span>
+        <span itemprop="articleBody"><p>最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下：</p>
+<p>sceduler_example.py 测试文件</p>
+<pre><code>from apscheduler.schedulers.blocking import BlockingScheduler
+from datetime import datetime
+sched = BlockingScheduler()  
+def my_job():
+    print(&apos;%s Hello World&apos;%datetime.now()) 
+def my_job2():
+    print(&apos;%s Hello World2&apos;%datetime.now())
+sched.add_job(my_job, &apos;cron&apos;, hour=&apos;12&apos;, minute=35)
+sched.add_job(my_job2, &apos;cron&apos;, day_of_week=&apos;*&apos;, hour=&apos;12&apos;, minute=30)
+sched.start()
+</code></pre><p>在Linux上执行命令 <code>nohup python -u sceduler_example.py &gt;&gt;  nohup.out   2&gt;&amp;1  &amp;</code>;注：-u参数，使得python不启用缓冲。</p>
+<p>再执行 <code>ps -ef | grep sceduler_example.py</code> 查看程序是否已经启动。</p>
+<p>然后 查看 nohup.out文件就能看见打印信息。</p>
+</span>
       
     </div>
 
@@ -267,9 +239,9 @@ obj.show()
       
         <div class="post-tags">
           
-            <a href="/tags/js/" rel="tag">#js</a>
+            <a href="/tags/python/" rel="tag">#python</a>
           
-            <a href="/tags/面试题/" rel="tag">#面试题</a>
+            <a href="/tags/linux/" rel="tag">#linux</a>
           
         </div>
       
@@ -278,13 +250,11 @@ obj.show()
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/20/Centos7-安装redis/" rel="prev">Centos7 安装redis</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/20/django-restframework/" rel="next">django---restframework</a>
+              <a href="/2018/06/05/web.py 中的钩子和中间件./" rel="next">web.py 中的钩子和中间件</a>
             
           </div>
         </div>
