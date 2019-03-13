@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="linux,python," />
+  <meta name="keywords" content="django," />
 
 
 
@@ -35,18 +35,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下： sceduler_example.py 测试文件 from apscheduler.schedulers.blocking import BlockingScheduler from datet">
-<meta name="keywords" content="linux,python">
+<meta name="description" content="MTV">
+<meta name="keywords" content="django">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nohup 测试python 程序print无输出问题">
-<meta property="og:url" content="http://yoursite.com/2018/07/02/nohup 测试python 程序print无输出问题/index.html">
+<meta property="og:title" content="django的MTV模式详解">
+<meta property="og:url" content="http://yoursite.com/2017/11/20/django的MTV模式/index.html">
 <meta property="og:site_name" content="Mona">
-<meta property="og:description" content="最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下： sceduler_example.py 测试文件 from apscheduler.schedulers.blocking import BlockingScheduler from datetime import datetime sched = BlockingSche">
+<meta property="og:description" content="MTV">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-02T10:04:28.000Z">
+<meta property="og:updated_time" content="2018-12-25T08:41:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nohup 测试python 程序print无输出问题">
-<meta name="twitter:description" content="最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下： sceduler_example.py 测试文件 from apscheduler.schedulers.blocking import BlockingScheduler from datetime import datetime sched = BlockingSche">
+<meta name="twitter:title" content="django的MTV模式详解">
+<meta name="twitter:description" content="MTV">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title> nohup 测试python 程序print无输出问题 | Mona </title>
+  <title> django的MTV模式详解 | Mona </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +173,7 @@
           
           
             
-              nohup 测试python 程序print无输出问题
+              django的MTV模式详解
             
           
         </h1>
@@ -182,8 +182,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2018-07-02T18:04:28+08:00" content="2018-07-02">
-            2018-07-02
+          <time itemprop="dateCreated" datetime="2017-11-20T17:25:03+08:00" content="2017-11-20">
+            2017-11-20
           </time>
         </span>
 
@@ -216,21 +216,7 @@
       
 
       
-        <span itemprop="articleBody"><p>最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下：</p>
-<p>sceduler_example.py 测试文件</p>
-<pre><code>from apscheduler.schedulers.blocking import BlockingScheduler
-from datetime import datetime
-sched = BlockingScheduler()  
-def my_job():
-    print(&apos;%s Hello World&apos;%datetime.now()) 
-def my_job2():
-    print(&apos;%s Hello World2&apos;%datetime.now())
-sched.add_job(my_job, &apos;cron&apos;, hour=&apos;12&apos;, minute=35)
-sched.add_job(my_job2, &apos;cron&apos;, day_of_week=&apos;*&apos;, hour=&apos;12&apos;, minute=30)
-sched.start()
-</code></pre><p>在Linux上执行命令 <code>nohup python -u sceduler_example.py &gt;&gt;  nohup.out   2&gt;&amp;1  &amp;</code>;注：-u参数，使得python不启用缓冲。</p>
-<p>再执行 <code>ps -ef | grep sceduler_example.py</code> 查看程序是否已经启动。</p>
-<p>然后 查看 nohup.out文件就能看见打印信息。</p>
+        <span itemprop="articleBody"><p>MTV</p>
 </span>
       
     </div>
@@ -239,9 +225,7 @@ sched.start()
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag">#linux</a>
-          
-            <a href="/tags/python/" rel="tag">#python</a>
+            <a href="/tags/django/" rel="tag">#django</a>
           
         </div>
       
@@ -250,13 +234,13 @@ sched.start()
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/13/centos7 编写开机自启动程序./" rel="prev">Centos7 编写开机自动启动程序</a>
+              <a href="/2017/11/20/Centos7-安装redis/" rel="prev">Centos7 安装redis</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/05/web.py 中的钩子和中间件./" rel="next">web.py 中的钩子和中间件</a>
+              <a href="/2017/11/20/js中的this到底是什么/" rel="next">js中的this到底是什么?</a>
             
           </div>
         </div>

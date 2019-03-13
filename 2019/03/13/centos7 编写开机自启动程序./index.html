@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="linux,python," />
+  <meta name="keywords" content="linux," />
 
 
 
@@ -35,18 +35,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下： sceduler_example.py 测试文件 from apscheduler.schedulers.blocking import BlockingScheduler from datet">
-<meta name="keywords" content="linux,python">
+<meta name="description" content="1、什么是 Systemd service？  一种以 .service 结尾的单元（unit）配置文件，用于控制由 systemd 控制或监视的进程。简单说，用于后台以守护精灵（daemon）的形式运行程序。 2、编写 Systemd service以python项目为例，python文件目录为：/home/upda">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nohup 测试python 程序print无输出问题">
-<meta property="og:url" content="http://yoursite.com/2018/07/02/nohup 测试python 程序print无输出问题/index.html">
+<meta property="og:title" content="Centos7 编写开机自动启动程序">
+<meta property="og:url" content="http://yoursite.com/2019/03/13/centos7 编写开机自启动程序./index.html">
 <meta property="og:site_name" content="Mona">
-<meta property="og:description" content="最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下： sceduler_example.py 测试文件 from apscheduler.schedulers.blocking import BlockingScheduler from datetime import datetime sched = BlockingSche">
+<meta property="og:description" content="1、什么是 Systemd service？  一种以 .service 结尾的单元（unit）配置文件，用于控制由 systemd 控制或监视的进程。简单说，用于后台以守护精灵（daemon）的形式运行程序。 2、编写 Systemd service以python项目为例，python文件目录为：/home/update ;项目结构为： ├── main.py #启动文件 ├── setting">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-02T10:04:28.000Z">
+<meta property="og:updated_time" content="2019-03-13T09:04:22.701Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nohup 测试python 程序print无输出问题">
-<meta name="twitter:description" content="最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下： sceduler_example.py 测试文件 from apscheduler.schedulers.blocking import BlockingScheduler from datetime import datetime sched = BlockingSche">
+<meta name="twitter:title" content="Centos7 编写开机自动启动程序">
+<meta name="twitter:description" content="1、什么是 Systemd service？  一种以 .service 结尾的单元（unit）配置文件，用于控制由 systemd 控制或监视的进程。简单说，用于后台以守护精灵（daemon）的形式运行程序。 2、编写 Systemd service以python项目为例，python文件目录为：/home/update ;项目结构为： ├── main.py #启动文件 ├── setting">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title> nohup 测试python 程序print无输出问题 | Mona </title>
+  <title> Centos7 编写开机自动启动程序 | Mona </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +173,7 @@
           
           
             
-              nohup 测试python 程序print无输出问题
+              Centos7 编写开机自动启动程序
             
           
         </h1>
@@ -182,8 +182,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2018-07-02T18:04:28+08:00" content="2018-07-02">
-            2018-07-02
+          <time itemprop="dateCreated" datetime="2019-03-13T17:04:22+08:00" content="2019-03-13">
+            2019-03-13
           </time>
         </span>
 
@@ -192,8 +192,8 @@
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/Python/" itemprop="url" rel="index">
-                  <span itemprop="name">python</span>
+                <a href="/categories/linux/" itemprop="url" rel="index">
+                  <span itemprop="name">linux</span>
                 </a>
               </span>
 
@@ -216,22 +216,40 @@
       
 
       
-        <span itemprop="articleBody"><p>最近用python写了个定时任务，写完后想放Linux上测试下，但是发现print一直没有输出，后来才发现正确测试命令如下：</p>
-<p>sceduler_example.py 测试文件</p>
-<pre><code>from apscheduler.schedulers.blocking import BlockingScheduler
-from datetime import datetime
-sched = BlockingScheduler()  
-def my_job():
-    print(&apos;%s Hello World&apos;%datetime.now()) 
-def my_job2():
-    print(&apos;%s Hello World2&apos;%datetime.now())
-sched.add_job(my_job, &apos;cron&apos;, hour=&apos;12&apos;, minute=35)
-sched.add_job(my_job2, &apos;cron&apos;, day_of_week=&apos;*&apos;, hour=&apos;12&apos;, minute=30)
-sched.start()
-</code></pre><p>在Linux上执行命令 <code>nohup python -u sceduler_example.py &gt;&gt;  nohup.out   2&gt;&amp;1  &amp;</code>;注：-u参数，使得python不启用缓冲。</p>
-<p>再执行 <code>ps -ef | grep sceduler_example.py</code> 查看程序是否已经启动。</p>
-<p>然后 查看 nohup.out文件就能看见打印信息。</p>
-</span>
+        <span itemprop="articleBody"><p1>1、什么是 Systemd service？</p1>
+
+<p>一种以 .service 结尾的单元（unit）配置文件，用于控制由 systemd 控制或监视的进程。简单说，用于后台以守护精灵（daemon）的形式运行程序。</p>
+<p><p1>2、编写 Systemd service</p1><br>以python项目为例，python文件目录为：/home/update ;项目结构为：</p>
+<pre><code>├── main.py #启动文件
+├── setting
+├── src
+└── static
+</code></pre><p>创建Unit配置文件</p>
+<pre><code>sudo vim /lib/systemd/system/main.service
+</code></pre><p>内容如下：</p>
+<pre><code>[Unit]
+Description=Test Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /home/update/main.py
+WorkingDirectory=/home/update2/ #添加程序运行的根目录
+
+[Install]
+WantedBy=multi-user.target
+</code></pre><p>为了获得脚本的输出信息，我们可以重定向到文件：</p>
+<pre><code>ExecStart=/usr/bin/python /home/updat/main.py &gt; /home/update/main.log 2&gt;&amp;1
+</code></pre><p>更改配置文件的权限：</p>
+<pre><code>sudo chmod 644 /lib/systemd/system/main.service
+</code></pre><p>使配置文件生效:</p>
+<pre><code>sudo systemctl daemon-reload
+sudo systemctl enable main.service #开机开启
+sudo systemctl start main.service #手动开启
+sudo systemctl stop main.service #手动停止
+</code></pre><p>查看服务状态:</p>
+<pre><code>sudo systemctl status main.service
+</code></pre></span>
       
     </div>
 
@@ -241,8 +259,6 @@ sched.start()
           
             <a href="/tags/linux/" rel="tag">#linux</a>
           
-            <a href="/tags/python/" rel="tag">#python</a>
-          
         </div>
       
 
@@ -250,13 +266,11 @@ sched.start()
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/13/centos7 编写开机自启动程序./" rel="prev">Centos7 编写开机自动启动程序</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/05/web.py 中的钩子和中间件./" rel="next">web.py 中的钩子和中间件</a>
+              <a href="/2018/07/02/nohup 测试python 程序print无输出问题/" rel="next">nohup 测试python 程序print无输出问题</a>
             
           </div>
         </div>
